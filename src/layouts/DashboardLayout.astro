@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
 
 interface SidebarItem { href: string; label: string; icon: string; badge?: string }
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 }
 const {
   title,
-  description = "Barista dashboard",
+  description = "Atithya dashboard",
   items,
   footer,
   pageTitle,
@@ -32,7 +31,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -48,38 +47,24 @@ const {
     </script>
   </head>
   <body class="relative min-h-screen">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div class="absolute inset-0 grid-bg opacity-40"></div>
-      <div class="orb animate-gradient" style="width:520px;height:520px;top:-140px;left:-160px;background:radial-gradient(circle at 30% 30%,#3b5bff,transparent 60%);"></div>
-      <div class="orb animate-gradient" style="width:520px;height:520px;bottom:-100px;right:-120px;background:radial-gradient(circle at 40% 40%,#ff3d8a,transparent 60%);"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,23,42,0.04),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.03),transparent_50%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.04),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.03),transparent_45%)]"></div>
     </div>
 
     <div class="mx-auto flex max-w-[1440px] gap-4 p-4">
       <Sidebar items={items} footer={footer} />
 
       <div class="min-w-0 flex-1">
-        <header class="glass sticky top-4 z-20 flex items-center justify-between gap-4 rounded-3xl px-5 py-3.5">
-          <div class="min-w-0">
-            {pageTitle && <h1 class="truncate text-xl font-semibold">{pageTitle}</h1>}
-            {pageSubtitle && <p class="truncate text-xs text-[var(--text-muted)]">{pageSubtitle}</p>}
-          </div>
-          <div class="flex items-center gap-2">
-            <label class="relative hidden md:block">
-              <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              <input type="text" placeholder="Search anything…" class="w-64 rounded-full bg-white/60 dark:bg-white/5 py-2 pl-9 pr-4 text-sm ring-1 ring-inset ring-white/10 placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]" />
-            </label>
-            <button aria-label="Notifications" class="relative grid h-10 w-10 place-items-center rounded-full glass">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-              <span class="absolute -right-0.5 -top-0.5 grid h-5 min-w-[20px] place-items-center rounded-full bg-accent-500 px-1 text-[10px] font-semibold text-white">4</span>
-            </button>
-            <ThemeToggle />
-            <a href="/" class="ml-1 grid h-10 w-10 place-items-center rounded-full glass" aria-label="Exit dashboard">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </header>
+        {(pageTitle || pageSubtitle) && (
+          <section class="mb-4 rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] px-4 py-3">
+            {pageTitle && <h1 class="text-lg font-semibold tracking-tight">{pageTitle}</h1>}
+            {pageSubtitle && <p class="mt-1 text-xs text-[var(--text-muted)]">{pageSubtitle}</p>}
+          </section>
+        )}
 
-        <main class="pt-4">
+        <main id="main-content">
           <slot />
         </main>
       </div>
@@ -98,19 +83,23 @@ const {
         });
       });
 
-      document.querySelectorAll<HTMLElement>(".card-3d").forEach((card) => {
-        let raf = 0;
-        card.addEventListener("mousemove", (e) => {
-          const r = card.getBoundingClientRect();
-          const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
-          const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(() => {
-            card.style.transform = `perspective(900px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg)`;
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+      if (!prefersReducedMotion && hasFinePointer) {
+        document.querySelectorAll<HTMLElement>(".card-3d").forEach((card) => {
+          let raf = 0;
+          card.addEventListener("mousemove", (e) => {
+            const r = card.getBoundingClientRect();
+            const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+            const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+              card.style.transform = `perspective(900px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg)`;
+            });
           });
+          card.addEventListener("mouseleave", () => { card.style.transform = "perspective(900px) rotateX(0) rotateY(0)"; });
         });
-        card.addEventListener("mouseleave", () => { card.style.transform = "perspective(900px) rotateX(0) rotateY(0)"; });
-      });
+      }
     </script>
   </body>
 </html>

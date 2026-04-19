@@ -6,52 +6,52 @@ import DashboardMock from "../components/DashboardMock.astro";
 
 const categories = [
   {
-    title: "Front of house",
+    title: "Billing and counter operations",
     items: [
-      { t: "Tableside POS", d: "Take orders on phones, tablets or kiosks. Instant printer routing to bar, pass and kitchen." },
-      { t: "Reservation canvas", d: "Drag-and-drop floor plan with turn-time forecasting. Deposits, holds and waitlists baked in." },
-      { t: "Guest memory", d: "Allergens, preferences, birthdays and past orders — surfaced on the host stand, never forgotten." },
+      { t: "Fast POS billing", d: "Create KOT, split bill, merge tables, partial settlement and fast checkout in peak hours." },
+      { t: "Multiple payment modes", d: "Cash, card, UPI and mixed settlement with operator-level tracking and shift summary." },
+      { t: "Role-based control", d: "Owner, manager, cashier and waiter permissions for secure production environment." },
     ],
   },
   {
-    title: "Back of house",
+    title: "Restaurant and kitchen control",
     items: [
-      { t: "Kitchen display", d: "Course timing, rail grouping and ticket states that match how chefs actually work." },
-      { t: "Inventory & recipes", d: "Weighted pours, COGS by plate and auto-86 when a prep bin runs dry." },
-      { t: "Procurement", d: "One-tap purchase orders to your suppliers with delivery reconciliation." },
+      { t: "Kitchen display", d: "Station-wise live KOT, prep queue and status updates for faster service turnaround." },
+      { t: "Inventory tracking", d: "Raw stock in, stock out, low alerts and item cost visibility for margin control." },
+      { t: "Menu management", d: "Item groups, modifiers, combo setup and price updates across all counters quickly." },
     ],
   },
   {
-    title: "Hotel",
+    title: "Hotel and property workflows",
     items: [
-      { t: "PMS", d: "Room grid, housekeeping, folios and channel manager — all inside Barista." },
-      { t: "Guest app", d: "Mobile check-in, room service and in-stay upsells branded as yours." },
-      { t: "Revenue tools", d: "Dynamic pricing, LOS rules and forecasting with pace reports." },
+      { t: "Front desk", d: "Room assignment, check-in/out, service posting and invoice in one connected workflow." },
+      { t: "Housekeeping", d: "Room cleaning status, issue notes and turnaround visibility for every floor." },
+      { t: "Revenue reports", d: "Date-wise occupancy, room revenue, food revenue and total business snapshots." },
     ],
   },
 ];
 
 const compare = [
-  { label: "Offline-first POS", a: true, b: true, c: false },
-  { label: "Hotel PMS included", a: true, b: false, c: false },
-  { label: "Reservations & deposits", a: true, b: true, c: true },
-  { label: "Multi-venue sync", a: true, b: false, c: true },
-  { label: "Weighted pour control", a: true, b: false, c: false },
-  { label: "AI prep routing", a: true, b: false, c: false },
-  { label: "Open API", a: true, b: true, c: false },
+  { label: "Cloud subscription plan", a: true, b: false, c: false },
+  { label: "Windows EXE local license", a: true, b: false, c: false },
+  { label: "Android phone app license", a: true, b: false, c: false },
+  { label: "Works in low/no internet", a: true, b: false, c: false },
+  { label: "Bar + restaurant + hotel in one", a: true, b: false, c: false },
+  { label: "Payment page with clear breakup", a: true, b: false, c: false },
+  { label: "Onboarding and setup guidance", a: true, b: false, c: false },
 ];
 ---
 
-<BaseLayout title="Features — Barista">
+<BaseLayout title="Features — Atithya Production Suite">
   <section class="relative px-5 pt-20">
     <div class="mx-auto max-w-5xl text-center">
       <span class="chip reveal">Features</span>
       <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Everything a venue needs,
-        <span class="gradient-text animate-gradient">nothing it doesn’t.</span>
+        Modules that actually run
+        <span class="gradient-text animate-gradient">daily production business.</span>
       </h1>
       <p class="reveal mx-auto mt-6 max-w-2xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Barista is a full hospitality operating system. Front of house, back of house, rooms and stays — all stitched together with a tactile interface you actually enjoy using.
+        Atithya is built to sell and operate your business. From billing to room checkout, every module is practical, connected and ready for real rush hours.
       </p>
     </div>
 
@@ -67,10 +67,10 @@ const compare = [
       <div class="mx-auto max-w-7xl">
         <div class="flex items-end justify-between">
           <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">Chapter {String(ci + 1).padStart(2, "0")}</p>
+            <p class="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">Module {String(ci + 1).padStart(2, "0")}</p>
             <h2 class="mt-2 text-3xl font-semibold md:text-5xl">{cat.title}</h2>
           </div>
-          <a href="#" class="hidden text-sm text-[var(--text-muted)] hover:text-[var(--text)] md:block">Read the docs →</a>
+          <a href="/payment" class="hidden text-sm text-[var(--text-muted)] hover:text-[var(--text)] md:block">See plan and payment details →</a>
         </div>
 
         <div class="mt-10 grid gap-5 md:grid-cols-3">
@@ -91,14 +91,14 @@ const compare = [
   <!-- Comparison -->
   <section class="relative px-5 py-20">
     <div class="mx-auto max-w-5xl">
-      <SectionHeading eyebrow="Side-by-side" title="How Barista compares" subtitle="A few of the alternatives teams consider before they choose us." />
+      <SectionHeading eyebrow="Side-by-side" title="How Atithya compares" subtitle="A few of the alternatives teams consider before they choose us." />
 
       <div class="mt-10 overflow-hidden rounded-3xl glass">
         <div class="grid grid-cols-4 border-b border-white/10 px-6 py-4 text-sm font-semibold">
           <span></span>
-          <span class="text-center">Barista</span>
-          <span class="text-center text-[var(--text-muted)]">Legacy POS</span>
-          <span class="text-center text-[var(--text-muted)]">Booking-only</span>
+          <span class="text-center">Atithya</span>
+          <span class="text-center text-[var(--text-muted)]">Generic POS</span>
+          <span class="text-center text-[var(--text-muted)]">Single feature app</span>
         </div>
         {compare.map((row, i) => (
           <div class:list={["grid grid-cols-4 px-6 py-4 text-sm", i % 2 && "bg-white/5 dark:bg-white/5"]}>

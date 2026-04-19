@@ -8,22 +8,22 @@ interface Props {
   gradient?: string;
   delay?: number;
 }
-const { label, value, delta, deltaDirection = "up", icon, gradient = "from-brand-500 to-accent-500", delay = 0 } = Astro.props;
+const { label, value, delta, deltaDirection = "up", icon, delay = 0 } = Astro.props;
 ---
-<article class="reveal card-3d relative overflow-hidden rounded-3xl glass p-5" style={`transition-delay:${delay}ms`}>
+<article class="reveal relative overflow-hidden rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-5 shadow-sm" style={`transition-delay:${delay}ms`}>
   <div class="flex items-start justify-between">
     <div>
-      <p class="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">{label}</p>
-      <p class="tilt-layer mt-2 text-3xl font-semibold">{value}</p>
+      <p class="text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">{label}</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight">{value}</p>
       {delta && (
-        <p class:list={["mt-1 inline-flex items-center gap-1 text-xs font-semibold", deltaDirection === "up" ? "text-emerald-400" : "text-rose-400"]}>
+        <p class:list={["mt-1 inline-flex items-center gap-1 text-xs font-semibold", deltaDirection === "up" ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"]}>
           <svg viewBox="0 0 24 24" class:list={["h-3 w-3", deltaDirection === "down" && "rotate-180"]} fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M10 7h7v7"/></svg>
           {delta}
         </p>
       )}
     </div>
     {icon && (
-      <span class={`tilt-layer grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg`}>
+      <span class="grid h-10 w-10 place-items-center rounded-lg border border-[var(--surface-border)] bg-[var(--bg-soft)] text-[var(--text-muted)]">
         <Fragment set:html={icon} />
       </span>
     )}
@@ -32,11 +32,11 @@ const { label, value, delta, deltaDirection = "up", icon, gradient = "from-brand
   <svg viewBox="0 0 120 40" class="mt-4 h-10 w-full">
     <defs>
       <linearGradient id={`g-${label.replace(/\s+/g, '')}`} x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0" stop-color="#3b5bff" stop-opacity="0.55"/>
-        <stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
+        <stop offset="0" stop-color="#64748b" stop-opacity="0.22"/>
+        <stop offset="1" stop-color="#64748b" stop-opacity="0"/>
       </linearGradient>
     </defs>
     <path d="M0 30 C 15 20, 25 28, 40 18 S 70 32, 85 14 S 110 22, 120 10 L 120 40 L 0 40 Z" fill={`url(#g-${label.replace(/\s+/g, '')})`}/>
-    <path d="M0 30 C 15 20, 25 28, 40 18 S 70 32, 85 14 S 110 22, 120 10" fill="none" stroke="#ff3d8a" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M0 30 C 15 20, 25 28, 40 18 S 70 32, 85 14 S 110 22, 120 10" fill="none" stroke="#64748b" stroke-width="1.8" stroke-linecap="round"/>
   </svg>
 </article>

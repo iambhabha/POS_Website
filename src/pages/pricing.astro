@@ -2,74 +2,119 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 
-const plans = [
+const cloudPlans = [
   {
-    name: "Starter",
-    price: { m: 39, y: 31 },
-    tagline: "For neighbourhood cafés & wine bars.",
+    name: "Cloud Basic",
+    price: { m: 3499, y: 3299 },
+    tagline: "Single outlet starting plan",
     features: [
-      "1 venue, up to 3 terminals",
-      "POS + reservations",
-      "Inventory basics",
+      "1 outlet, 3 users included",
+      "Billing + KOT + table management",
+      "Daily sales dashboard",
+      "Cloud backup and sync",
       "Email support",
     ],
     highlight: false,
   },
   {
-    name: "Growth",
-    price: { m: 99, y: 79 },
-    tagline: "For restaurants, bars & busy venues.",
+    name: "Cloud Pro",
+    price: { m: 6999, y: 6499 },
+    tagline: "Best for busy bar/restaurant",
     features: [
-      "Up to 3 venues, unlimited terminals",
-      "Kitchen display + prep routing",
-      "Advanced inventory & pours",
-      "Analytics workspace",
+      "Up to 3 outlets, unlimited users",
+      "Advanced inventory and recipe costing",
+      "Role permissions and audit logs",
+      "Multi-branch reports",
       "Priority support",
     ],
     highlight: true,
   },
   {
-    name: "Hotel",
-    price: { m: 249, y: 199 },
-    tagline: "Boutique hotels & multi-venue groups.",
+    name: "Cloud Enterprise",
+    price: { m: 12999, y: 11999 },
+    tagline: "Hotels and groups with complex operations",
     features: [
-      "Full PMS + channel manager",
-      "Housekeeping & folios",
-      "Unlimited venues & properties",
-      "Dedicated CSM",
-      "99.99% SLA",
+      "Hotel + restaurant workflows",
+      "Centralized owner dashboard",
+      "Custom onboarding and data migration",
+      "Dedicated account manager",
+      "SLA and enterprise support",
     ],
     highlight: false,
   },
 ];
 
+const licenses = [
+  {
+    type: "Windows EXE Local License",
+    price: "INR 14,999 one-time per device",
+    lines: [
+      "Runs on local machine for uninterrupted billing",
+      "Best for low/no internet locations",
+      "Optional cloud sync add-on available",
+      "Activation key delivered after payment",
+    ],
+  },
+  {
+    type: "Android Phone App License",
+    price: "INR 4,999 one-time per phone",
+    lines: [
+      "Mobile waiter billing and order taking",
+      "Works with production POS account",
+      "Per-device activation with secure binding",
+      "Optional yearly support renewal",
+    ],
+  },
+];
+
+const paymentSteps = [
+  "Choose plan type: Cloud subscription or one-time local license.",
+  "Select quantity: number of outlets, PCs, or phones.",
+  "Complete payment and receive invoice instantly.",
+  "Get download links and activation keys on email.",
+  "Our onboarding team helps you go live quickly.",
+];
+
 const faqs = [
-  { q: "Is there a free trial?", a: "Yes — 21 days, no credit card required. You’ll keep access to your data even if you don’t convert." },
-  { q: "Do you charge per terminal?", a: "No. Plans are per venue with unlimited terminals and staff accounts on Growth and Hotel." },
-  { q: "Can I switch plans later?", a: "Any time. Upgrades are prorated to the day, downgrades take effect at the next cycle." },
-  { q: "What about hardware?", a: "Barista runs on iPad, Android, web and our optional Barista Terminal. Bring your own or lease from us." },
+  {
+    q: "Cloud plan aur EXE license me difference kya hai?",
+    a: "Cloud plan monthly/yearly subscription hai with online sync and remote dashboard. EXE license one-time local setup hai jo internet ke bina bhi billing chala sakta hai.",
+  },
+  {
+    q: "Android app alag payment kyu hai?",
+    a: "Android app per-phone licensed hai because it is device activated for production security and account control.",
+  },
+  {
+    q: "Payment ke baad kya milega?",
+    a: "Invoice, download link, activation key/license details, and setup instructions. Enterprise buyers ko onboarding call bhi milti hai.",
+  },
+  {
+    q: "Kya custom bundle mil sakta hai?",
+    a: "Haan. Agar aapko cloud + EXE + phone mixed deployment chahiye to contact page se sales team ko requirement bhejein.",
+  },
 ];
 ---
 
-<BaseLayout title="Pricing — Barista">
+<BaseLayout title="Pricing — Atithya">
   <section class="relative px-5 pt-20">
     <div class="mx-auto max-w-5xl text-center">
-      <span class="chip reveal">Pricing</span>
+      <span class="chip reveal">Pricing and Plans</span>
       <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Simple pricing.
-        <span class="gradient-text animate-gradient">Serious hospitality.</span>
+        Clear pricing for
+        <span class="gradient-text">cloud and local deployments.</span>
       </h1>
-      <p class="reveal mx-auto mt-6 max-w-xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Start free for 21 days on any plan. Switch or cancel whenever. Pricing below is per venue.
+      <p class="reveal mx-auto mt-6 max-w-2xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
+        Aapke business model ke hisab se plan choose karo: cloud subscription, Windows EXE one-time license, ya Android phone app license.
+        Har option ka payment breakup transparent hai.
       </p>
 
-      <div class="reveal mt-8 inline-flex items-center gap-1 rounded-full glass p-1" style="transition-delay:240ms;">
-        <button data-billing="m" class="billing-btn is-active relative rounded-full px-4 py-1.5 text-sm font-medium text-white transition">
-          <span class="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500"></span>
+      <div class="reveal mt-8 inline-flex items-center gap-1 rounded-lg border border-[var(--surface-border)] bg-[var(--surface)] p-1" style="transition-delay:240ms;">
+        <button data-billing="m" class="billing-btn is-active relative rounded-md px-4 py-1.5 text-sm font-medium text-white transition">
+          <span class="absolute inset-0 -z-10 rounded-md bg-[#27272a]"></span>
           Monthly
         </button>
-        <button data-billing="y" class="billing-btn relative rounded-full px-4 py-1.5 text-sm font-medium text-[var(--text-muted)] transition">
-          Yearly · save 20%
+        <button data-billing="y" class="billing-btn relative rounded-md px-4 py-1.5 text-sm font-medium text-[var(--text-muted)] transition">
+          Yearly (save)
         </button>
       </div>
     </div>
@@ -77,29 +122,29 @@ const faqs = [
 
   <section class="relative px-5 py-16">
     <div class="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
-      {plans.map((p, i) => (
+      {cloudPlans.map((p, i) => (
         <article
           class:list={[
-            "reveal relative overflow-hidden rounded-3xl p-7",
-            p.highlight ? "glass-strong ring-2 ring-brand-500/50 shadow-2xl scale-[1.01]" : "glass",
+            "reveal relative overflow-hidden rounded-2xl border bg-[var(--surface)] p-7 shadow-sm",
+            p.highlight ? "border-[var(--text)]" : "border-[var(--surface-border)]",
           ]}
           style={`transition-delay:${i*90}ms`}
         >
           {p.highlight && (
-            <span class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-accent-500 to-brand-500 px-3 py-1 text-[11px] font-semibold text-white shadow-lg">Most popular</span>
+            <span class="absolute right-5 top-5 rounded-md border border-[var(--surface-border)] bg-[var(--bg-soft)] px-3 py-1 text-[11px] font-semibold text-[var(--text)]">Most chosen</span>
           )}
           <p class="text-sm font-semibold tracking-wide">{p.name}</p>
           <p class="mt-1 text-sm text-[var(--text-muted)]">{p.tagline}</p>
           <div class="mt-6 flex items-end gap-1">
-            <span class="text-xs text-[var(--text-muted)]">$</span>
-            <span class="price text-5xl font-semibold tracking-tight" data-m={p.price.m} data-y={p.price.y}>{p.price.m}</span>
-            <span class="mb-1 text-sm text-[var(--text-muted)]">/venue/mo</span>
+            <span class="text-xs text-[var(--text-muted)]">INR</span>
+            <span class="price text-4xl font-semibold tracking-tight" data-m={p.price.m} data-y={p.price.y}>{p.price.m}</span>
+            <span class="mb-1 text-sm text-[var(--text-muted)]">/month</span>
           </div>
-          <a href="/download" class:list={["mt-6 block text-center", p.highlight ? "btn-primary pulse-glow" : "btn-ghost"]}>Start free trial</a>
+          <a href="/payment" class:list={["mt-6 block text-center", p.highlight ? "btn-primary" : "btn-ghost"]}>Go to payment</a>
           <ul class="mt-6 space-y-3 text-sm">
             {p.features.map((f) => (
               <li class="flex items-start gap-2">
-                <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white">
+                <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-md border border-[var(--surface-border)] bg-[var(--bg-soft)] text-[var(--text-muted)]">
                   <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
                 </span>
                 {f}
@@ -111,15 +156,51 @@ const faqs = [
     </div>
   </section>
 
+  <section class="relative px-5 py-12">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading eyebrow="One-time licenses" title="Local software pricing" subtitle="Cloud subscription ke alawa aap one-time local licenses bhi le sakte ho." />
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        {licenses.map((l, i) => (
+          <article class="reveal rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm" style={`transition-delay:${i*80}ms`}>
+            <p class="text-lg font-semibold">{l.type}</p>
+            <p class="mt-2 text-base font-medium text-[var(--text)]">{l.price}</p>
+            <ul class="mt-4 space-y-2 text-sm text-[var(--text-muted)]">
+              {l.lines.map((line) => <li>• {line}</li>)}
+            </ul>
+            <a href="/payment" class="mt-5 inline-flex btn-ghost !py-2 !px-4 text-sm">Pay and activate</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative px-5 py-12">
+    <div class="mx-auto max-w-5xl rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm md:p-8">
+      <SectionHeading eyebrow="How payment works" title="Simple buying process" align="left" />
+      <ol class="mt-6 space-y-3 text-sm text-[var(--text-muted)]">
+        {paymentSteps.map((step, i) => (
+          <li class="flex gap-3">
+            <span class="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-md border border-[var(--surface-border)] bg-[var(--bg-soft)] text-xs font-semibold text-[var(--text)]">{i + 1}</span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/payment" class="btn-primary">Open payment page</a>
+        <a href="/contact" class="btn-ghost">Talk to sales</a>
+      </div>
+    </div>
+  </section>
+
   <section class="relative px-5 py-16">
     <div class="mx-auto max-w-4xl">
-      <SectionHeading eyebrow="FAQ" title="Questions, answered." />
-      <div class="mt-10 divide-y divide-white/10 rounded-3xl glass">
-        {faqs.map((f, i) => (
+      <SectionHeading eyebrow="FAQ" title="Pricing questions" />
+      <div class="mt-10 divide-y divide-[var(--surface-border)] rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] shadow-sm">
+        {faqs.map((f) => (
           <details class="group p-5 [&_summary::-webkit-details-marker]:hidden">
             <summary class="flex cursor-pointer items-center justify-between text-base font-medium">
               {f.q}
-              <span class="grid h-7 w-7 place-items-center rounded-full glass transition-transform group-open:rotate-45">
+              <span class="grid h-7 w-7 place-items-center rounded-md border border-[var(--surface-border)] bg-[var(--bg-soft)] transition-transform group-open:rotate-45">
                 <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
               </span>
             </summary>
@@ -142,7 +223,7 @@ const faqs = [
         setTimeout(() => {
           p.textContent = v;
           p.classList.remove("opacity-0", "translate-y-2");
-        }, 140);
+        }, 120);
       }
     });
     buttons.forEach((b) => {
@@ -153,7 +234,7 @@ const faqs = [
       const existing = b.querySelector("span.absolute");
       if (active && !existing) {
         const span = document.createElement("span");
-        span.className = "absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500";
+        span.className = "absolute inset-0 -z-10 rounded-md bg-[#27272a]";
         b.prepend(span);
       } else if (!active && existing) {
         existing.remove();

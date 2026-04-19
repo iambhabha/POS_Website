@@ -6,10 +6,10 @@ interface Props {
 const {
   title = "Revenue mix",
   segments = [
-    { label: "Dining", value: 46, color: "#3b5bff" },
-    { label: "Bar", value: 28, color: "#ff3d8a" },
-    { label: "Rooms", value: 18, color: "#19e3b3" },
-    { label: "Events", value: 8, color: "#f59e0b" },
+    { label: "Dining", value: 46, color: "#334155" },
+    { label: "Bar", value: 28, color: "#475569" },
+    { label: "Rooms", value: 18, color: "#64748b" },
+    { label: "Events", value: 8, color: "#94a3b8" },
   ],
 } = Astro.props;
 
@@ -23,7 +23,7 @@ const dashes = segments.map((s) => {
   return entry;
 });
 ---
-<article class="reveal glass rounded-3xl p-6">
+<article class="reveal rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm">
   <p class="text-sm font-semibold">{title}</p>
   <p class="text-xs text-[var(--text-muted)]">This week</p>
 

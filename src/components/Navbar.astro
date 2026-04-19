@@ -5,9 +5,8 @@ import ThemeToggle from "./ThemeToggle.astro";
 const nav = [
   { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/payment", label: "Payment" },
   { href: "/download", label: "Download" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/admin", label: "Admin" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -15,25 +14,24 @@ const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <header class="sticky top-0 z-50 w-full">
-  <div class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 dark:from-black/40 to-transparent blur-sm"></div>
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[var(--bg)]/95 to-transparent"></div>
   <div class="relative mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-5 py-3.5">
-    <div class="glass flex w-full items-center justify-between rounded-full px-4 py-2 shadow-sm">
+    <div class="flex w-full items-center justify-between rounded-xl border border-[var(--surface-border)] bg-[var(--surface)] px-4 py-2 shadow-sm">
       <Logo />
 
-      <nav class="hidden items-center gap-1 md:flex">
+      <nav aria-label="Primary" class="hidden items-center gap-1 md:flex">
         {nav.map((item) => {
           const active = pathname === item.href;
           return (
             <a
               href={item.href}
               class:list={[
-                "relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
-                active ? "text-white" : "hover:text-brand-600 dark:hover:text-brand-300",
+                "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                active
+                  ? "bg-[var(--bg-soft)] text-[var(--text)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text)]",
               ]}
             >
-              {active && (
-                <span class="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500 shadow-[0_6px_20px_-8px_rgba(59,91,255,0.6)]"></span>
-              )}
               {item.label}
             </a>
           );
@@ -42,11 +40,14 @@ const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 
       <div class="flex items-center gap-2">
         <ThemeToggle />
-        <a href="/download" class="hidden btn-primary !py-2 !px-4 text-sm sm:inline-flex">Get Barista</a>
+        <a href="/payment" class="hidden btn-primary !py-2 !px-4 text-sm sm:inline-flex">Buy Atithya</a>
         <button
           id="mobile-nav-btn"
           aria-label="Open menu"
-          class="grid h-10 w-10 place-items-center rounded-full glass md:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          class="grid h-10 w-10 place-items-center rounded-md border border-[var(--surface-border)] bg-[var(--bg-soft)] md:hidden"
+          type="button"
         >
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M4 7h16M4 12h16M4 17h16" />
@@ -56,11 +57,11 @@ const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
     </div>
   </div>
 
-  <div id="mobile-nav" class="hidden md:hidden">
+  <div id="mobile-nav" class="hidden md:hidden" aria-label="Mobile navigation">
     <div class="mx-auto max-w-7xl px-5 pb-3">
-      <div class="glass rounded-3xl p-3">
+      <div class="rounded-xl border border-[var(--surface-border)] bg-[var(--surface)] p-3 shadow-sm">
         {nav.map((item) => (
-          <a href={item.href} class="block rounded-2xl px-4 py-2.5 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5">{item.label}</a>
+          <a href={item.href} class="mobile-nav-link block rounded-md px-4 py-2.5 text-sm font-medium text-[var(--text-muted)] hover:bg-[var(--bg-soft)] hover:text-[var(--text)]">{item.label}</a>
         ))}
       </div>
     </div>
@@ -70,5 +71,32 @@ const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 <script>
   const btn = document.getElementById("mobile-nav-btn");
   const menu = document.getElementById("mobile-nav");
-  btn?.addEventListener("click", () => menu?.classList.toggle("hidden"));
+  const mobileLinks = document.querySelectorAll<HTMLAnchorElement>(".mobile-nav-link");
+
+  function setMenuState(open: boolean) {
+    if (!menu || !btn) return;
+    menu.classList.toggle("hidden", !open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+
+  btn?.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    setMenuState(!isOpen);
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => setMenuState(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuState(false);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!menu || !btn) return;
+    const target = event.target as Node;
+    const clickedInside = menu.contains(target) || btn.contains(target);
+    if (!clickedInside) setMenuState(false);
+  });
 </script>

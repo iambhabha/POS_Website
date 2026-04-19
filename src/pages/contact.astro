@@ -2,16 +2,16 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Contact — Barista">
+<BaseLayout title="Contact — Atithya">
   <section class="relative px-5 pt-20">
     <div class="mx-auto max-w-5xl text-center">
-      <span class="chip reveal">Let’s talk</span>
+      <span class="chip reveal">Talk to us</span>
       <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Say hello to
-        <span class="gradient-text animate-gradient">Team Barista.</span>
+        Sales and onboarding
+        <span class="gradient-text">for your production setup.</span>
       </h1>
-      <p class="reveal mx-auto mt-6 max-w-xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Whether you’re opening your first venue or switching 50, we’ll help you move — without downtime.
+      <p class="reveal mx-auto mt-6 max-w-2xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
+        Share your exact requirement and we will suggest the right combination of cloud plan, Windows EXE license and Android phone licenses.
       </p>
     </div>
   </section>
@@ -20,75 +20,72 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1.3fr]">
       <div class="reveal space-y-5">
         {[
-          { t: "Sales", d: "sales@barista.app", s: "For new venues & onboarding" },
-          { t: "Support", d: "support@barista.app", s: "24/7 for live venues" },
-          { t: "Press", d: "press@barista.app", s: "Media kits & quotes" },
+          { t: "Sales", d: "sales@Atithya.app", s: "Plan and pricing guidance" },
+          { t: "Activation", d: "activation@Atithya.app", s: "License key and setup help" },
+          { t: "Support", d: "support@Atithya.app", s: "Live venue technical support" },
         ].map((c, i) => (
-          <article class="card-3d glass rounded-3xl p-6" style={`transition-delay:${i*80}ms`}>
-            <p class="tilt-layer text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">{c.t}</p>
-            <p class="tilt-layer mt-2 text-xl font-semibold">{c.d}</p>
-            <p class="tilt-layer mt-1 text-sm text-[var(--text-muted)]">{c.s}</p>
+          <article class="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm" style={`transition-delay:${i*80}ms`}>
+            <p class="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">{c.t}</p>
+            <p class="mt-2 text-xl font-semibold">{c.d}</p>
+            <p class="mt-1 text-sm text-[var(--text-muted)]">{c.s}</p>
           </article>
         ))}
 
-        <div class="glass rounded-3xl p-6 reveal">
-          <p class="text-sm font-semibold">Offices</p>
+        <div class="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm reveal">
+          <p class="text-sm font-semibold">Regional teams</p>
           <div class="mt-4 grid grid-cols-2 gap-3 text-sm text-[var(--text-muted)]">
             <div>
-              <p class="font-medium text-[var(--text)]">Lisbon</p>
-              <p>R. das Gaivotas, 1200-202</p>
-            </div>
-            <div>
-              <p class="font-medium text-[var(--text)]">Singapore</p>
-              <p>79 Anson Road, #22-03</p>
-            </div>
-            <div>
-              <p class="font-medium text-[var(--text)]">New York</p>
-              <p>31 W 27th St, 10001</p>
-            </div>
-            <div>
               <p class="font-medium text-[var(--text)]">Mumbai</p>
-              <p>BKC, Bandra East, 400051</p>
+              <p>BKC, Bandra East</p>
+            </div>
+            <div>
+              <p class="font-medium text-[var(--text)]">Delhi NCR</p>
+              <p>Sector 62, Noida</p>
+            </div>
+            <div>
+              <p class="font-medium text-[var(--text)]">Bengaluru</p>
+              <p>Outer Ring Road</p>
+            </div>
+            <div>
+              <p class="font-medium text-[var(--text)]">Hyderabad</p>
+              <p>HITEC City</p>
             </div>
           </div>
         </div>
       </div>
 
-      <form class="reveal glass-strong relative overflow-hidden rounded-3xl p-6 md:p-8" style="transition-delay:120ms;">
-        <div class="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-accent-500/40 blur-3xl"></div>
-        <div class="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-brand-500/40 blur-3xl"></div>
-
-        <div class="relative grid gap-4 md:grid-cols-2">
+      <form class="reveal rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm md:p-8" style="transition-delay:120ms;">
+        <div class="grid gap-4 md:grid-cols-2">
           {[
-            { id: "first", l: "First name", ph: "Léa" },
-            { id: "last", l: "Last name", ph: "Moreau" },
-            { id: "email", l: "Work email", ph: "lea@mirage.co", full: true, type: "email" },
-            { id: "company", l: "Venue name", ph: "Mirage Bar & Grill", full: true },
+            { id: "first", l: "First name", ph: "Rahul" },
+            { id: "last", l: "Last name", ph: "Sharma" },
+            { id: "email", l: "Work email", ph: "rahul@venue.com", full: true, type: "email" },
+            { id: "company", l: "Venue / Business name", ph: "Downtown Restobar", full: true },
           ].map((f) => (
             <label class:list={["block", f.full && "md:col-span-2"]} for={f.id}>
               <span class="text-xs font-medium text-[var(--text-muted)]">{f.l}</span>
-              <input id={f.id} type={f.type || "text"} placeholder={f.ph} class="mt-1.5 w-full rounded-2xl bg-white/60 dark:bg-white/5 px-4 py-3 text-sm ring-1 ring-inset ring-white/20 placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]" />
+              <input id={f.id} type={f.type || "text"} placeholder={f.ph} class="mt-1.5 w-full rounded-md border border-[var(--surface-border)] bg-[var(--bg)] px-4 py-3 text-sm placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]" />
             </label>
           ))}
 
           <label class="md:col-span-2" for="size">
-            <span class="text-xs font-medium text-[var(--text-muted)]">How big is your team?</span>
+            <span class="text-xs font-medium text-[var(--text-muted)]">How many billing devices do you need?</span>
             <div class="mt-1.5 grid grid-cols-4 gap-2">
-              {["1–5", "6–20", "21–100", "100+"].map((s) => (
-                <button type="button" class="chip-option rounded-2xl glass px-3 py-2.5 text-sm hover:border-brand-500/60">{s}</button>
+              {["1-2", "3-5", "6-10", "10+"].map((s) => (
+                <button type="button" class="chip-option rounded-md border border-[var(--surface-border)] bg-[var(--bg)] px-3 py-2.5 text-sm hover:border-[var(--text-muted)]">{s}</button>
               ))}
             </div>
           </label>
 
           <label class="md:col-span-2" for="msg">
-            <span class="text-xs font-medium text-[var(--text-muted)]">Tell us about your venue</span>
-            <textarea id="msg" rows="5" placeholder="We run a 40-seat wine bar + 12 rooms upstairs…" class="mt-1.5 w-full rounded-2xl bg-white/60 dark:bg-white/5 px-4 py-3 text-sm ring-1 ring-inset ring-white/20 placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"></textarea>
+            <span class="text-xs font-medium text-[var(--text-muted)]">Tell us your exact requirement</span>
+            <textarea id="msg" rows="5" placeholder="Example: 2 Windows EXE counters + 4 Android waiter phones + cloud owner dashboard" class="mt-1.5 w-full rounded-md border border-[var(--surface-border)] bg-[var(--bg)] px-4 py-3 text-sm placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"></textarea>
           </label>
 
-          <div class="md:col-span-2 flex items-center justify-between">
-            <p class="text-xs text-[var(--text-muted)]">We’ll get back within 1 business day.</p>
-            <button class="btn-primary pulse-glow" type="submit">
-              Send message
+          <div class="md:col-span-2 flex items-center justify-between gap-3">
+            <p class="text-xs text-[var(--text-muted)]">We will respond with quote and payment path within 1 business day.</p>
+            <button class="btn-primary" type="submit">
+              Send requirement
               <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
             </button>
           </div>
@@ -101,8 +98,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 <script>
   document.querySelectorAll<HTMLButtonElement>(".chip-option").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".chip-option").forEach((b) => b.classList.remove("!border-brand-500", "!text-white", "!bg-gradient-to-r", "from-brand-500", "to-accent-500"));
-      btn.classList.add("!border-brand-500", "!text-white", "!bg-gradient-to-r", "from-brand-500", "to-accent-500");
+      document.querySelectorAll(".chip-option").forEach((b) => b.classList.remove("!border-[var(--text)]", "!bg-[var(--bg-soft)]", "!text-[var(--text)]"));
+      btn.classList.add("!border-[var(--text)]", "!bg-[var(--bg-soft)]", "!text-[var(--text)]");
     });
   });
 </script>

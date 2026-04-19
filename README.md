@@ -1,4 +1,4 @@
-# Barista — Hospitality SaaS Website
+# Atithya — Hospitality SaaS Website
 
 Premium Astro site for a Bar, Hotel & Restaurant management platform. Glass UI, parallax,
 3D tilt cards, animated gradient backgrounds, and a full dashboard + admin experience.

@@ -31,15 +31,15 @@ const points = series.map((v, i) => {
 const d = points.map((p, i) => (i === 0 ? `M ${p[0]} ${p[1]}` : `L ${p[0]} ${p[1]}`)).join(" ");
 const area = `${d} L ${pad + (series.length - 1) * step} ${H - pad} L ${pad} ${H - pad} Z`;
 ---
-<article class="reveal glass rounded-3xl p-6">
+<article class="reveal rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-6 shadow-sm">
   <header class="flex items-start justify-between">
     <div>
       <p class="text-sm font-semibold">{title}</p>
       <p class="text-xs text-[var(--text-muted)]">{subtitle}</p>
     </div>
-    <div class="flex gap-1 rounded-full glass p-1 text-[11px]">
+    <div class="flex gap-1 rounded-lg border border-[var(--surface-border)] bg-[var(--bg-soft)] p-1 text-[11px]">
       {["1D","1W","1M","ALL"].map((r, i) => (
-        <button class:list={["rounded-full px-2.5 py-1 transition-colors", i===1 ? "bg-gradient-to-r from-brand-500 to-accent-500 text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]"]}>{r}</button>
+        <button class:list={["rounded-md px-2.5 py-1 transition-colors", i===1 ? "bg-[var(--surface)] text-[var(--text)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"]}>{r}</button>
       ))}
     </div>
   </header>
@@ -47,13 +47,12 @@ const area = `${d} L ${pad + (series.length - 1) * step} ${H - pad} L ${pad} ${H
   <svg viewBox={`0 0 ${W} ${H}`} class="mt-5 w-full" preserveAspectRatio="none">
     <defs>
       <linearGradient id={`area-${id}`} x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0" stop-color="#3b5bff" stop-opacity="0.55"/>
-        <stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
+        <stop offset="0" stop-color="#64748b" stop-opacity="0.24"/>
+        <stop offset="1" stop-color="#64748b" stop-opacity="0"/>
       </linearGradient>
       <linearGradient id={`stroke-${id}`} x1="0" x2="1" y1="0" y2="0">
-        <stop offset="0" stop-color="#3b5bff"/>
-        <stop offset="0.6" stop-color="#ff3d8a"/>
-        <stop offset="1" stop-color="#19e3b3"/>
+        <stop offset="0" stop-color="#475569"/>
+        <stop offset="1" stop-color="#334155"/>
       </linearGradient>
     </defs>
     {[0.25, 0.5, 0.75].map((f) => (
@@ -62,7 +61,7 @@ const area = `${d} L ${pad + (series.length - 1) * step} ${H - pad} L ${pad} ${H
     <path d={area} fill={`url(#area-${id})`} />
     <path class="chart-line" d={d} fill="none" stroke={`url(#stroke-${id})`} stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
     {points.map(([x, y], i) => (
-      <circle cx={x} cy={y} r={i === points.length - 1 ? 4.5 : 2.5} fill={i === points.length - 1 ? "#ff3d8a" : "#3b5bff"}>
+      <circle cx={x} cy={y} r={i === points.length - 1 ? 4.5 : 2.5} fill={i === points.length - 1 ? "#334155" : "#64748b"}>
         {i === points.length - 1 && <animate attributeName="r" values="4;6;4" dur="2s" repeatCount="indefinite" />}
       </circle>
     ))}

@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = "Barista — Bar, Hotel & Restaurant Management Suite",
-  description = "Barista is the all-in-one POS, reservation and inventory platform for modern bars, hotels and restaurants. Beautiful, fast, and built for hospitality.",
+  title = "Atithya — Bar, Hotel & Restaurant Management Suite",
+  description = "Atithya is the all-in-one POS, reservation and inventory platform for modern bars, hotels and restaurants. Beautiful, fast, and built for hospitality.",
   showChrome = true,
 } = Astro.props;
 ---
@@ -26,7 +26,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -43,29 +43,16 @@ const {
     </script>
   </head>
   <body class="relative min-h-screen">
-    <!-- Animated background -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Subtle background -->
     <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div class="absolute inset-0 grid-bg opacity-60"></div>
-      <div
-        class="orb animate-gradient"
-        style="width: 520px; height: 520px; top: -140px; left: -160px; background: radial-gradient(circle at 30% 30%, #3b5bff, transparent 60%);"
-      >
-      </div>
-      <div
-        class="orb animate-gradient"
-        style="width: 600px; height: 600px; top: 20%; right: -180px; background: radial-gradient(circle at 60% 40%, #ff3d8a, transparent 60%);"
-      >
-      </div>
-      <div
-        class="orb animate-gradient"
-        style="width: 420px; height: 420px; bottom: -140px; left: 30%; background: radial-gradient(circle at 50% 50%, #19e3b3, transparent 60%);"
-      >
-      </div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,23,42,0.04),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.03),transparent_50%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.04),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.03),transparent_45%)]"></div>
     </div>
 
     {showChrome && <Navbar />}
 
-    <main class="relative">
+    <main id="main-content" class="relative">
       <slot />
     </main>
 
@@ -86,10 +73,14 @@ const {
       );
       document.querySelectorAll(".reveal, [data-aos]").forEach((el) => io.observe(el));
 
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+
       // Subtle parallax for [data-parallax] elements
       const parallaxEls = document.querySelectorAll<HTMLElement>("[data-parallax]");
       let ticking = false;
       function onScroll() {
+        if (prefersReducedMotion) return;
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => {
@@ -101,30 +92,34 @@ const {
           ticking = false;
         });
       }
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
+      if (!prefersReducedMotion) {
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
 
       // 3D tilt for .card-3d
-      const tiltCards = document.querySelectorAll<HTMLElement>(".card-3d");
-      tiltCards.forEach((card) => {
-        const damp = 14;
-        let raf = 0;
-        function move(e: MouseEvent) {
-          const rect = card.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-          const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(() => {
-            card.style.transform = `perspective(900px) rotateX(${(-y * damp).toFixed(2)}deg) rotateY(${(x * damp).toFixed(2)}deg) translateZ(0)`;
-          });
-        }
-        function leave() {
-          cancelAnimationFrame(raf);
-          card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
-        }
-        card.addEventListener("mousemove", move);
-        card.addEventListener("mouseleave", leave);
-      });
+      if (!prefersReducedMotion && hasFinePointer) {
+        const tiltCards = document.querySelectorAll<HTMLElement>(".card-3d");
+        tiltCards.forEach((card) => {
+          const damp = 14;
+          let raf = 0;
+          function move(e: MouseEvent) {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+              card.style.transform = `perspective(900px) rotateX(${(-y * damp).toFixed(2)}deg) rotateY(${(x * damp).toFixed(2)}deg) translateZ(0)`;
+            });
+          }
+          function leave() {
+            cancelAnimationFrame(raf);
+            card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+          }
+          card.addEventListener("mousemove", move);
+          card.addEventListener("mouseleave", leave);
+        });
+      }
 
       // Theme toggle
       const toggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
