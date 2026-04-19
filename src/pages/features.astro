@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import DashboardMock from "../components/DashboardMock.astro";
+
+const categories = [
+  {
+    title: "Front of house",
+    items: [
+      { t: "Tableside POS", d: "Take orders on phones, tablets or kiosks. Instant printer routing to bar, pass and kitchen." },
+      { t: "Reservation canvas", d: "Drag-and-drop floor plan with turn-time forecasting. Deposits, holds and waitlists baked in." },
+      { t: "Guest memory", d: "Allergens, preferences, birthdays and past orders — surfaced on the host stand, never forgotten." },
+    ],
+  },
+  {
+    title: "Back of house",
+    items: [
+      { t: "Kitchen display", d: "Course timing, rail grouping and ticket states that match how chefs actually work." },
+      { t: "Inventory & recipes", d: "Weighted pours, COGS by plate and auto-86 when a prep bin runs dry." },
+      { t: "Procurement", d: "One-tap purchase orders to your suppliers with delivery reconciliation." },
+    ],
+  },
+  {
+    title: "Hotel",
+    items: [
+      { t: "PMS", d: "Room grid, housekeeping, folios and channel manager — all inside Barista." },
+      { t: "Guest app", d: "Mobile check-in, room service and in-stay upsells branded as yours." },
+      { t: "Revenue tools", d: "Dynamic pricing, LOS rules and forecasting with pace reports." },
+    ],
+  },
+];
+
+const compare = [
+  { label: "Offline-first POS", a: true, b: true, c: false },
+  { label: "Hotel PMS included", a: true, b: false, c: false },
+  { label: "Reservations & deposits", a: true, b: true, c: true },
+  { label: "Multi-venue sync", a: true, b: false, c: true },
+  { label: "Weighted pour control", a: true, b: false, c: false },
+  { label: "AI prep routing", a: true, b: false, c: false },
+  { label: "Open API", a: true, b: true, c: false },
+];
+---
+
+<BaseLayout title="Features — Barista">
+  <section class="relative px-5 pt-20">
+    <div class="mx-auto max-w-5xl text-center">
+      <span class="chip reveal">Features</span>
+      <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
+        Everything a venue needs,
+        <span class="gradient-text animate-gradient">nothing it doesn’t.</span>
+      </h1>
+      <p class="reveal mx-auto mt-6 max-w-2xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
+        Barista is a full hospitality operating system. Front of house, back of house, rooms and stays — all stitched together with a tactile interface you actually enjoy using.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-16 max-w-5xl">
+      <div class="card-3d reveal relative mx-auto">
+        <DashboardMock />
+      </div>
+    </div>
+  </section>
+
+  {categories.map((cat, ci) => (
+    <section class="relative px-5 py-20">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex items-end justify-between">
+          <div class="reveal">
+            <p class="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">Chapter {String(ci + 1).padStart(2, "0")}</p>
+            <h2 class="mt-2 text-3xl font-semibold md:text-5xl">{cat.title}</h2>
+          </div>
+          <a href="#" class="hidden text-sm text-[var(--text-muted)] hover:text-[var(--text)] md:block">Read the docs →</a>
+        </div>
+
+        <div class="mt-10 grid gap-5 md:grid-cols-3">
+          {cat.items.map((it, i) => (
+            <FeatureCard
+              title={it.t}
+              description={it.d}
+              icon={`<span class='text-xs font-bold'>${String(i+1).padStart(2, '0')}</span>`}
+              gradient={ci === 0 ? "from-brand-500 to-accent-500" : ci === 1 ? "from-mint-400 to-brand-500" : "from-amber-400 to-accent-500"}
+              delay={i * 80}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Comparison -->
+  <section class="relative px-5 py-20">
+    <div class="mx-auto max-w-5xl">
+      <SectionHeading eyebrow="Side-by-side" title="How Barista compares" subtitle="A few of the alternatives teams consider before they choose us." />
+
+      <div class="mt-10 overflow-hidden rounded-3xl glass">
+        <div class="grid grid-cols-4 border-b border-white/10 px-6 py-4 text-sm font-semibold">
+          <span></span>
+          <span class="text-center">Barista</span>
+          <span class="text-center text-[var(--text-muted)]">Legacy POS</span>
+          <span class="text-center text-[var(--text-muted)]">Booking-only</span>
+        </div>
+        {compare.map((row, i) => (
+          <div class:list={["grid grid-cols-4 px-6 py-4 text-sm", i % 2 && "bg-white/5 dark:bg-white/5"]}>
+            <span>{row.label}</span>
+            {[row.a, row.b, row.c].map((v, idx) => (
+              <span class="flex justify-center">
+                {v ? (
+                  <span class={idx === 0 ? "grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white" : "text-emerald-400"}>
+                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  </span>
+                ) : (
+                  <span class="text-[var(--text-muted)]">—</span>
+                )}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

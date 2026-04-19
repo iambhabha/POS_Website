@@ -1,0 +1,142 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  showChrome?: boolean;
+}
+
+const {
+  title = "Barista — Bar, Hotel & Restaurant Management Suite",
+  description = "Barista is the all-in-one POS, reservation and inventory platform for modern bars, hotels and restaurants. Beautiful, fast, and built for hospitality.",
+  showChrome = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = stored || (prefersDark ? "dark" : "light");
+          if (theme === "dark") document.documentElement.classList.add("dark");
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="relative min-h-screen">
+    <!-- Animated background -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="absolute inset-0 grid-bg opacity-60"></div>
+      <div
+        class="orb animate-gradient"
+        style="width: 520px; height: 520px; top: -140px; left: -160px; background: radial-gradient(circle at 30% 30%, #3b5bff, transparent 60%);"
+      >
+      </div>
+      <div
+        class="orb animate-gradient"
+        style="width: 600px; height: 600px; top: 20%; right: -180px; background: radial-gradient(circle at 60% 40%, #ff3d8a, transparent 60%);"
+      >
+      </div>
+      <div
+        class="orb animate-gradient"
+        style="width: 420px; height: 420px; bottom: -140px; left: 30%; background: radial-gradient(circle at 50% 50%, #19e3b3, transparent 60%);"
+      >
+      </div>
+    </div>
+
+    {showChrome && <Navbar />}
+
+    <main class="relative">
+      <slot />
+    </main>
+
+    {showChrome && <Footer />}
+
+    <script>
+      // Lightweight reveal-on-scroll (replaces AOS for SSR-friendly, no-dep usage)
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible", "aos-animate");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      document.querySelectorAll(".reveal, [data-aos]").forEach((el) => io.observe(el));
+
+      // Subtle parallax for [data-parallax] elements
+      const parallaxEls = document.querySelectorAll<HTMLElement>("[data-parallax]");
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          parallaxEls.forEach((el) => {
+            const speed = parseFloat(el.dataset.parallax || "0.15");
+            el.style.transform = `translate3d(0, ${y * speed * -1}px, 0)`;
+          });
+          ticking = false;
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // 3D tilt for .card-3d
+      const tiltCards = document.querySelectorAll<HTMLElement>(".card-3d");
+      tiltCards.forEach((card) => {
+        const damp = 14;
+        let raf = 0;
+        function move(e: MouseEvent) {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+          const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transform = `perspective(900px) rotateX(${(-y * damp).toFixed(2)}deg) rotateY(${(x * damp).toFixed(2)}deg) translateZ(0)`;
+          });
+        }
+        function leave() {
+          cancelAnimationFrame(raf);
+          card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+        }
+        card.addEventListener("mousemove", move);
+        card.addEventListener("mouseleave", leave);
+      });
+
+      // Theme toggle
+      const toggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+      toggles.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const isDark = document.documentElement.classList.toggle("dark");
+          const theme = isDark ? "dark" : "light";
+          document.documentElement.dataset.theme = theme;
+          try { localStorage.setItem("theme", theme); } catch (e) {}
+          document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
+        });
+      });
+    </script>
+  </body>
+</html>

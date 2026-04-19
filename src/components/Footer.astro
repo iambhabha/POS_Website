@@ -1,0 +1,86 @@
+---
+import Logo from "./Logo.astro";
+
+const cols = [
+  {
+    title: "Product",
+    links: [
+      { href: "/features", label: "Features" },
+      { href: "/pricing", label: "Pricing" },
+      { href: "/download", label: "Download" },
+      { href: "/dashboard", label: "Dashboard" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/contact", label: "Contact" },
+      { href: "#", label: "Careers" },
+      { href: "#", label: "Press kit" },
+      { href: "#", label: "Partners" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { href: "#", label: "Docs" },
+      { href: "#", label: "API reference" },
+      { href: "#", label: "Changelog" },
+      { href: "#", label: "Status" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "#", label: "Privacy" },
+      { href: "#", label: "Terms" },
+      { href: "#", label: "Security" },
+      { href: "#", label: "DPA" },
+    ],
+  },
+];
+---
+
+<footer class="relative mt-28 px-5 pb-12">
+  <div class="mx-auto max-w-7xl">
+    <div class="glass relative overflow-hidden rounded-[32px] p-8 md:p-12">
+      <div class="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-accent-500/30 blur-3xl"></div>
+
+      <div class="grid gap-10 md:grid-cols-6">
+        <div class="md:col-span-2">
+          <Logo />
+          <p class="mt-4 max-w-xs text-sm text-[var(--text-muted)]">
+            Hospitality OS for bars, hotels and restaurants. Beautiful, fast, built for your floor.
+          </p>
+
+          <div class="mt-6 flex items-center gap-2">
+            {["twitter","linkedin","github","instagram"].map((s) => (
+              <a href="#" aria-label={s} class="grid h-9 w-9 place-items-center rounded-full glass transition-transform hover:-translate-y-0.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-brand-500 to-accent-500"></span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {cols.map((col) => (
+          <div>
+            <p class="mb-3 text-sm font-semibold">{col.title}</p>
+            <ul class="space-y-2 text-sm text-[var(--text-muted)]">
+              {col.links.map((l) => (
+                <li><a href={l.href} class="transition-colors hover:text-[var(--text)]">{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div class="divider-gradient mt-10"></div>
+
+      <div class="mt-6 flex flex-col items-start justify-between gap-3 text-sm text-[var(--text-muted)] md:flex-row md:items-center">
+        <p>© {new Date().getFullYear()} Barista Labs. All rights reserved.</p>
+        <p>Crafted with care for hospitality teams worldwide.</p>
+      </div>
+    </div>
+  </div>
+</footer>

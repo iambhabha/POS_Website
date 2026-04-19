@@ -1,0 +1,54 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  items: { href: string; label: string; icon: string; badge?: string }[];
+  footer?: { name: string; role: string };
+}
+const { items, footer } = Astro.props;
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<aside class="sticky top-4 z-30 hidden h-[calc(100vh-2rem)] w-64 flex-none md:block">
+  <div class="flex h-full flex-col glass rounded-3xl p-4">
+    <div class="px-2 pt-2">
+      <Logo />
+    </div>
+    <nav class="mt-6 flex-1 space-y-1">
+      {items.map((item) => {
+        const active = pathname === item.href || pathname.startsWith(item.href + "/");
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-colors",
+              active ? "text-white" : "text-[var(--text-muted)] hover:text-[var(--text)]",
+            ]}
+          >
+            {active && (
+              <span class="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r from-brand-500 to-accent-500 shadow-lg"></span>
+            )}
+            <span class:list={["grid h-8 w-8 place-items-center rounded-xl", active ? "bg-white/15" : "glass"]}>
+              <Fragment set:html={item.icon} />
+            </span>
+            <span class="flex-1">{item.label}</span>
+            {item.badge && (
+              <span class:list={["rounded-full px-2 py-0.5 text-[10px] font-semibold", active ? "bg-white/20" : "bg-accent-500/20 text-accent-500"]}>{item.badge}</span>
+            )}
+          </a>
+        );
+      })}
+    </nav>
+    {footer && (
+      <div class="glass mt-4 rounded-2xl p-3">
+        <div class="flex items-center gap-3">
+          <span class="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-400 to-accent-500"></span>
+          <div class="min-w-0">
+            <p class="truncate text-sm font-semibold">{footer.name}</p>
+            <p class="truncate text-xs text-[var(--text-muted)]">{footer.role}</p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</aside>

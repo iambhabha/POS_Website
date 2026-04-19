@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import DashboardMock from "../components/DashboardMock.astro";
+
+const features = [
+  { title: "Lightning POS", description: "Take orders, split checks and close tables in a few taps. Works offline, syncs instantly.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='3'/><path d='M3 9h18M9 3v18'/></svg>", gradient: "from-brand-500 to-brand-700" },
+  { title: "Reservations", description: "Floor-plan based booking with automated reminders and deposit capture. No more no-shows.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='3'/><path d='M16 2v4M8 2v4M3 10h18'/></svg>", gradient: "from-accent-500 to-accent-600" },
+  { title: "Rooms & Stays", description: "PMS built for boutique hotels. Channel manager, housekeeping and folios in one place.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12l9-8 9 8'/><path d='M5 10v10h14V10'/></svg>", gradient: "from-mint-400 to-mint-500" },
+  { title: "Inventory & Pours", description: "Track every bottle, keg and ingredient. Weight-based pour control at the bar.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2h8l-1 5a4 4 0 0 1-6 0l-1-5z'/><path d='M12 11v11'/></svg>", gradient: "from-amber-400 to-rose-500" },
+  { title: "Insights", description: "Real-time sales, covers and labor analytics. Forecast demand before it hits your door.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='M7 15l4-4 4 2 5-6'/></svg>", gradient: "from-brand-400 to-mint-500" },
+  { title: "Team & Payroll", description: "Rostering, tips distribution and time-clocks that respect your margins and your crew.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7M17 10a4 4 0 0 0 0-8M22 21c0-3-2-5-5-6'/></svg>", gradient: "from-purple-400 to-brand-500" },
+];
+---
+
+<BaseLayout title="Barista — Hospitality OS for bars, hotels & restaurants">
+  <Hero />
+
+  <!-- Features grid -->
+  <section class="relative px-5 py-28">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading
+        eyebrow="One platform"
+        title="Everything your venue runs on, <span class='gradient-text'>beautifully unified.</span>"
+        subtitle="From the front door to the last pour, Barista replaces the tangle of apps your team is stuck with today."
+      />
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {features.map((f, i) => <FeatureCard {...f} delay={i * 60} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax product showcase -->
+  <section class="relative overflow-hidden px-5 py-24">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div data-parallax="0.2" class="absolute left-[10%] top-20 text-[22rem] font-bold leading-none text-white/5 dark:text-white/5 select-none">/ flow</div>
+    </div>
+    <div class="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
+      <div class="reveal">
+        <span class="chip"><span class="h-1.5 w-1.5 rounded-full bg-mint-400"></span>Service-first</span>
+        <h2 class="mt-4 text-4xl font-semibold md:text-5xl">From seat to settle in
+          <span class="gradient-text">under 12 seconds.</span>
+        </h2>
+        <p class="mt-4 max-w-lg text-[var(--text-muted)]">A tactile POS designed for muscle memory. Built-in AI prep routing keeps the kitchen & bar in sync, so every guest feels personally hosted.</p>
+        <ul class="mt-6 space-y-3 text-sm">
+          {[
+            "Haptic quick-actions for the busiest sections",
+            "Multi-venue menu sync with seasonal rules",
+            "Smart tabs that follow guests from bar to table",
+          ].map((t) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white">
+                <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="relative reveal" style="transition-delay:120ms;">
+        <div data-parallax="0.08" class="card-3d mx-auto">
+          <DashboardMock />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats band -->
+  <section class="relative px-5 py-20">
+    <div class="mx-auto max-w-7xl glass rounded-[32px] p-10 md:p-14 overflow-hidden relative">
+      <div class="absolute -top-20 left-1/2 h-60 w-[80%] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-500/30 via-accent-500/30 to-mint-500/30 blur-3xl"></div>
+      <div class="grid gap-8 md:grid-cols-4">
+        {[
+          { k: "99.99%", v: "Service uptime — across 48 regions" },
+          { k: "3.2s", v: "Average order-to-kitchen routing" },
+          { k: "$2.4B", v: "Processed annually through Barista" },
+          { k: "12k+", v: "Venues choosing Barista in 42 countries" },
+        ].map((s, i) => (
+          <div class="reveal" style={`transition-delay:${i*80}ms`}>
+            <p class="text-4xl font-semibold gradient-text md:text-5xl">{s.k}</p>
+            <p class="mt-2 text-sm text-[var(--text-muted)]">{s.v}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="relative px-5 py-24">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading
+        eyebrow="Why teams switch"
+        title="Operators, owners & maître d’s — all speak <span class='gradient-text'>Barista.</span>"
+      />
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        {[
+          { q: "Barista replaced four tools in our stack and paid for itself in five weeks. The UI alone made our team happier.", a: "Mireille L.", r: "GM, Aurora Hotel Group" },
+          { q: "Our bar uses it nightly for 800+ covers. Nothing else is this fast and this gorgeous.", a: "Tomás R.", r: "Bar Director, Mirage" },
+          { q: "From reservation to folio-out, the guest journey feels handcrafted. Our NPS jumped 22 points.", a: "Aarav P.", r: "Founder, Haven Residences" },
+        ].map((t, i) => (
+          <article class="reveal glass rounded-3xl p-6" style={`transition-delay:${i*100}ms`}>
+            <div class="flex items-center gap-0.5 text-amber-400">
+              {[0,1,2,3,4].map(() => (<svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>))}
+            </div>
+            <p class="mt-4 text-[15px] leading-relaxed">“{t.q}”</p>
+            <div class="mt-6 flex items-center gap-3">
+              <span class="h-10 w-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500"></span>
+              <div>
+                <p class="text-sm font-semibold">{t.a}</p>
+                <p class="text-xs text-[var(--text-muted)]">{t.r}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative px-5 py-24">
+    <div class="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] p-10 md:p-16 text-center">
+      <div class="absolute inset-0 -z-10 animate-gradient bg-gradient-to-br from-brand-600 via-accent-500 to-mint-500 opacity-90"></div>
+      <div class="absolute inset-0 -z-10 noise"></div>
+      <h2 class="text-4xl font-semibold text-white md:text-6xl">Ready to run a venue guests remember?</h2>
+      <p class="mx-auto mt-4 max-w-xl text-white/80">Start free. Launch your first floor in minutes. Scale to every property in one click.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/download" class="btn-primary !bg-white !text-brand-700 shadow-xl hover:shadow-2xl">
+          Start your free trial
+        </a>
+        <a href="/pricing" class="btn-ghost !border-white/50 !text-white !bg-white/10">See pricing</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

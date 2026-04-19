@@ -1,0 +1,114 @@
+---
+import DashboardMock from "./DashboardMock.astro";
+---
+<section class="relative overflow-hidden px-5 pt-14 md:pt-20">
+  <!-- Floating decorative shapes -->
+  <div class="pointer-events-none absolute inset-0 -z-10">
+    <div data-parallax="0.2" class="absolute left-[8%] top-16 h-20 w-20 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 opacity-40 blur-sm float-y"></div>
+    <div data-parallax="0.35" class="absolute right-[12%] top-28 h-14 w-14 rounded-full bg-gradient-to-br from-accent-500 to-accent-600 opacity-50 float-y-slow"></div>
+    <div data-parallax="0.15" class="absolute left-[40%] top-10 h-8 w-8 rotate-12 rounded-lg bg-mint-400 opacity-60 float-y"></div>
+  </div>
+
+  <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+    <div class="relative z-10">
+      <span class="chip reveal">
+        <span class="relative flex h-2 w-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-accent-500"></span>
+        </span>
+        Now available — Barista v4.0
+      </span>
+
+      <h1 class="reveal mt-5 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl" style="transition-delay:80ms;">
+        The hospitality OS
+        <br />
+        <span class="gradient-text animate-gradient">your floor deserves.</span>
+      </h1>
+
+      <p class="reveal mt-6 max-w-xl text-lg text-[var(--text-muted)]" style="transition-delay:160ms;">
+        Barista is the all-in-one POS, reservations and inventory suite for modern bars, hotels
+        and restaurants. Beautifully fast. Gorgeously simple. Built for hospitality.
+      </p>
+
+      <div class="reveal mt-8 flex flex-wrap items-center gap-3" style="transition-delay:240ms;">
+        <a href="/download" class="btn-primary pulse-glow">
+          Start free trial
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/features" class="btn-ghost">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          Watch product tour
+        </a>
+      </div>
+
+      <div class="reveal mt-10 flex items-center gap-6" style="transition-delay:320ms;">
+        <div class="flex -space-x-2">
+          {[0,1,2,3].map((i) => (
+            <span class:list={["h-9 w-9 rounded-full border-2 border-white/70 dark:border-black/30 bg-gradient-to-br",
+              i===0 && "from-brand-400 to-brand-700",
+              i===1 && "from-accent-400 to-accent-600",
+              i===2 && "from-mint-400 to-mint-500",
+              i===3 && "from-amber-400 to-rose-500",
+            ]}></span>
+          ))}
+        </div>
+        <div>
+          <div class="flex items-center gap-0.5 text-amber-400">
+            {[0,1,2,3,4].map(() => (
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+            ))}
+          </div>
+          <p class="text-sm text-[var(--text-muted)]">Loved by 12,000+ venues worldwide</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating product mockup -->
+    <div class="relative">
+      <div class="absolute -inset-8 -z-10 rounded-[48px] bg-gradient-to-br from-brand-500/20 via-accent-500/20 to-mint-500/20 blur-2xl"></div>
+
+      <div class="relative mx-auto card-3d">
+        <DashboardMock />
+
+        <!-- Floating info chips -->
+        <div data-parallax="0.12" class="absolute -left-6 top-8 rotate-[-6deg] glass rounded-2xl px-3 py-2 shadow-xl float-y-slow">
+          <div class="flex items-center gap-2">
+            <span class="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-mint-400 to-mint-500 text-white">
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <p class="text-xs font-semibold">Order #4821</p>
+              <p class="text-[11px] text-[var(--text-muted)]">Served in 3m 12s</p>
+            </div>
+          </div>
+        </div>
+
+        <div data-parallax="0.2" class="absolute -right-6 bottom-10 rotate-[5deg] glass rounded-2xl px-3 py-2 shadow-xl float-y">
+          <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Live sales</p>
+          <p class="text-lg font-semibold gradient-text">+ $1,284</p>
+          <p class="text-[11px] text-[var(--text-muted)]">past hour</p>
+        </div>
+
+        <div data-parallax="0.3" class="absolute right-10 -top-6 rotate-[8deg] glass rounded-full px-3 py-1.5 shadow-xl">
+          <span class="text-xs font-medium">⚡ 42 tables live</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logo marquee -->
+  <div class="mx-auto mt-20 max-w-7xl">
+    <p class="text-center text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Trusted by hospitality teams at</p>
+    <div class="mt-6 overflow-hidden">
+      <div class="marquee-track flex w-max items-center gap-14 opacity-70">
+        {[...Array(2)].map(() => (
+          <div class="flex items-center gap-14">
+            {["AURORA","HAVEN","MIRAGE","CASCADE","VÉLO","NORTHWIND","LUMEN","SIGNAL","ORBIT"].map((b) => (
+              <span class="text-xl font-semibold tracking-[0.2em] text-[var(--text-muted)]">{b}</span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

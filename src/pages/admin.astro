@@ -1,0 +1,149 @@
+---
+import DashboardLayout from "../layouts/DashboardLayout.astro";
+import StatCard from "../components/StatCard.astro";
+import LineChart from "../components/LineChart.astro";
+import ChatUI from "../components/ChatUI.astro";
+
+const sidebar = [
+  { href: "/admin", label: "Admin", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15l-3 6h6l-3-6zM5 3h14l-1 9H6z'/></svg>" },
+  { href: "/admin/users", label: "Users", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7'/></svg>", badge: "248" },
+  { href: "/admin/orders", label: "Orders", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 10h18'/></svg>" },
+  { href: "/admin/payments", label: "Payments", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='6' width='18' height='12' rx='2'/><path d='M3 10h18'/></svg>" },
+  { href: "/admin/support", label: "Support", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a4 4 0 0 1-4 4H8l-5 3V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z'/></svg>", badge: "5" },
+  { href: "/admin/insights", label: "Insights", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='M7 15l4-4 4 2 5-6'/></svg>" },
+  { href: "/admin/settings", label: "Settings", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z'/></svg>" },
+  { href: "/dashboard", label: "User dashboard", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>" },
+];
+
+const users = [
+  { name: "Sofia Marín", role: "Owner", venue: "Aurora Hotel", plan: "Hotel", status: "Active", last: "2m ago" },
+  { name: "Kenji Tanaka", role: "Manager", venue: "Mirage Rooftop", plan: "Growth", status: "Active", last: "16m ago" },
+  { name: "Lea Petit", role: "Bartender", venue: "Haven Residences", plan: "Hotel", status: "Invited", last: "—" },
+  { name: "Daniel Obi", role: "Host", venue: "Cascade Brasserie", plan: "Starter", status: "Active", last: "4h ago" },
+  { name: "Yara Haddad", role: "Chef", venue: "Northwind Grill", plan: "Growth", status: "Suspended", last: "Yesterday" },
+  { name: "Mateo Álvarez", role: "Server", venue: "Signal Tavern", plan: "Starter", status: "Active", last: "1m ago" },
+];
+
+const activity = [
+  { who: "Sofia M.", what: "upgraded plan to Hotel", when: "2m" },
+  { who: "Kenji T.", what: "added 14 new menu items", when: "12m" },
+  { who: "Daniel O.", what: "closed nightly cashout", when: "2h" },
+  { who: "System", what: "pushed v4.0.2 to 248 venues", when: "6h" },
+  { who: "Yara H.", what: "flagged supplier delay: seafood", when: "1d" },
+];
+---
+
+<DashboardLayout
+  title="Admin — Barista"
+  items={sidebar}
+  footer={{ name: "You", role: "Administrator" }}
+  pageTitle="Operations"
+  pageSubtitle="Across 248 venues · 42 countries"
+>
+  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <StatCard label="Active users" value="18,294" delta="+9.1%" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7'/></svg>" gradient="from-brand-500 to-brand-700" delay={0} />
+    <StatCard label="Sales (GMV)" value="$1.28M" delta="+18.6%" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>" gradient="from-accent-500 to-accent-600" delay={80} />
+    <StatCard label="Support tickets" value="27" delta="-32%" deltaDirection="up" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a4 4 0 0 1-4 4H8l-5 3V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z'/></svg>" gradient="from-mint-400 to-mint-500" delay={160} />
+    <StatCard label="System health" value="99.99%" delta="SLA met" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0zM9 12l2 2 4-4'/></svg>" gradient="from-amber-400 to-rose-500" delay={240} />
+  </section>
+
+  <!-- Users table + activity -->
+  <section class="mt-6 grid gap-4 xl:grid-cols-3">
+    <article class="reveal glass rounded-3xl p-6 xl:col-span-2">
+      <header class="flex items-center justify-between gap-3">
+        <div>
+          <p class="text-sm font-semibold">Users</p>
+          <p class="text-xs text-[var(--text-muted)]">248 active this week</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="relative hidden md:block">
+            <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="text" placeholder="Search users" class="w-56 rounded-full bg-white/60 dark:bg-white/5 py-2 pl-9 pr-4 text-sm ring-1 ring-inset ring-white/10 placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]" />
+          </div>
+          <button class="btn-primary !py-1.5 !px-3 text-xs">+ Invite</button>
+        </div>
+      </header>
+
+      <div class="mt-4 overflow-x-auto scrollbar-hidden">
+        <table class="w-full text-sm">
+          <thead class="text-xs uppercase tracking-wider text-[var(--text-muted)]">
+            <tr class="text-left">
+              <th class="py-3 pr-4 font-medium">Member</th>
+              <th class="py-3 pr-4 font-medium">Venue</th>
+              <th class="py-3 pr-4 font-medium">Plan</th>
+              <th class="py-3 pr-4 font-medium">Status</th>
+              <th class="py-3 pr-4 font-medium">Last seen</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/10">
+            {users.map((u) => (
+              <tr class="transition-colors hover:bg-white/5">
+                <td class="py-3 pr-4">
+                  <div class="flex items-center gap-3">
+                    <span class="h-9 w-9 rounded-xl bg-gradient-to-br from-brand-400 to-accent-500"></span>
+                    <div>
+                      <p class="font-semibold">{u.name}</p>
+                      <p class="text-xs text-[var(--text-muted)]">{u.role}</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3 pr-4">{u.venue}</td>
+                <td class="py-3 pr-4">
+                  <span class="chip !py-1 !px-2.5 text-[11px]">{u.plan}</span>
+                </td>
+                <td class="py-3 pr-4">
+                  <span class:list={[
+                    "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium",
+                    u.status === "Active" && "bg-emerald-400/15 text-emerald-400",
+                    u.status === "Invited" && "bg-brand-500/15 text-brand-500",
+                    u.status === "Suspended" && "bg-rose-400/15 text-rose-400",
+                  ]}>
+                    <span class={`h-1.5 w-1.5 rounded-full ${u.status === "Active" ? "bg-emerald-400" : u.status === "Invited" ? "bg-brand-500" : "bg-rose-400"}`}></span>
+                    {u.status}
+                  </span>
+                </td>
+                <td class="py-3 pr-4 text-[var(--text-muted)]">{u.last}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="reveal glass rounded-3xl p-6">
+      <header class="flex items-center justify-between">
+        <p class="text-sm font-semibold">Activity</p>
+        <span class="chip !py-1 !px-2 text-[10px]">Live</span>
+      </header>
+      <ul class="mt-4 space-y-4">
+        {activity.map((a, i) => (
+          <li class="flex gap-3">
+            <span class="relative flex-none">
+              <span class="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-xs font-semibold text-white">{a.who.split(" ").map((n) => n[0]).join("").slice(0,2)}</span>
+              {i < activity.length - 1 && <span class="absolute left-1/2 top-8 h-6 w-px -translate-x-1/2 bg-white/10"></span>}
+            </span>
+            <div class="flex-1">
+              <p class="text-sm"><span class="font-semibold">{a.who}</span> {a.what}</p>
+              <p class="text-[11px] text-[var(--text-muted)]">{a.when} ago</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </article>
+  </section>
+
+  <!-- Chart + chat -->
+  <section class="mt-6 grid gap-4 xl:grid-cols-3">
+    <div class="xl:col-span-2">
+      <LineChart
+        id="admin-sales"
+        title="GMV across all venues"
+        subtitle="Rolling 14-day window"
+        series={[120, 132, 128, 146, 140, 172, 168, 182, 196, 188, 212, 226, 240, 258]}
+      />
+    </div>
+    <div>
+      <ChatUI />
+    </div>
+  </section>
+</DashboardLayout>

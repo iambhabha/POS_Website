@@ -1,0 +1,74 @@
+---
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<div class={`relative w-full ${compact ? "max-w-md" : "max-w-2xl"} aspect-[16/10]`}>
+  <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-500/40 via-accent-500/30 to-mint-500/40 blur-2xl opacity-70"></div>
+  <div class="relative h-full w-full overflow-hidden rounded-3xl glass-strong shadow-2xl">
+    <div class="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5">
+      <span class="h-2.5 w-2.5 rounded-full bg-red-400/80"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-yellow-400/80"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80"></span>
+      <span class="ml-3 text-[11px] text-[var(--text-muted)]">barista.app / dashboard</span>
+    </div>
+
+    <div class="grid h-[calc(100%-38px)] grid-cols-[70px_1fr]">
+      <!-- Sidebar -->
+      <aside class="flex flex-col items-center gap-3 border-r border-white/10 py-3">
+        {["grid","cart","menu","users","chart","gear"].map((_, i) => (
+          <span class:list={[
+            "grid h-9 w-9 place-items-center rounded-xl text-xs",
+            i === 0 ? "bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-lg" : "text-[var(--text-muted)]"
+          ]}>
+            <span class="h-3.5 w-3.5 rounded-sm bg-current opacity-80"></span>
+          </span>
+        ))}
+      </aside>
+
+      <!-- Content -->
+      <div class="flex flex-col gap-3 p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Today</p>
+            <p class="text-base font-semibold">Good evening, Alex</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="chip !py-1 !px-2 text-[10px]">Live</span>
+            <span class="h-7 w-7 rounded-full bg-gradient-to-br from-brand-400 to-accent-500"></span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          {[
+            { label: "Revenue", value: "$8,214", trend: "+12.4%" },
+            { label: "Orders", value: "312", trend: "+5.1%" },
+            { label: "Occupancy", value: "86%", trend: "+2.3%" },
+          ].map((s) => (
+            <div class="rounded-2xl glass p-2.5">
+              <p class="text-[9px] uppercase tracking-wider text-[var(--text-muted)]">{s.label}</p>
+              <p class="mt-0.5 text-sm font-semibold">{s.value}</p>
+              <p class="text-[10px] text-emerald-400">{s.trend}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex-1 rounded-2xl glass p-3">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-medium">Sales flow</p>
+            <span class="text-[10px] text-[var(--text-muted)]">Last 7 days</span>
+          </div>
+          <svg viewBox="0 0 300 90" class="mt-2 h-[calc(100%-18px)] w-full">
+            <defs>
+              <linearGradient id="mockGrad" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#3b5bff" stop-opacity="0.6"/>
+                <stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 70 C 30 60, 50 30, 80 35 S 130 70, 160 45 S 220 15, 250 30 S 290 55, 300 40 L 300 90 L 0 90 Z" fill="url(#mockGrad)"/>
+            <path d="M0 70 C 30 60, 50 30, 80 35 S 130 70, 160 45 S 220 15, 250 30 S 290 55, 300 40" fill="none" stroke="#ff3d8a" stroke-width="1.8"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
