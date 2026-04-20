@@ -1,122 +1,177 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionHeading from "../components/SectionHeading.astro";
-import FeatureCard from "../components/FeatureCard.astro";
-import DashboardMock from "../components/DashboardMock.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import ParallaxLayer from '../components/ParallaxLayer.astro';
+import Reveal from '../components/Reveal.astro';
 
-const categories = [
+const pillars = [
   {
-    title: "Front of house",
-    items: [
-      { t: "Tableside POS", d: "Take orders on phones, tablets or kiosks. Instant printer routing to bar, pass and kitchen." },
-      { t: "Reservation canvas", d: "Drag-and-drop floor plan with turn-time forecasting. Deposits, holds and waitlists baked in." },
-      { t: "Guest memory", d: "Allergens, preferences, birthdays and past orders — surfaced on the host stand, never forgotten." },
+    id: 'service', eyebrow: '01 · Service',
+    title: 'A floor you can feel from anywhere.',
+    body: 'A live plan of every table, tab, station, and reservation. Touch-first for the floor; keyboard-fast for the manager\'s office; glanceable from the kitchen pass.',
+    features: [
+      { title: 'Interactive floor plan',   body: 'Drag-to-move, merge, split. Colour-coded by course, server, or allergy flag.', icon: 'pos' },
+      { title: 'Course pacing',             body: 'Kitchen sees the room, not just the ticket. Auto-fire or chef-fire, your call.', icon: 'menu' },
+      { title: 'Allergen & pref flows',    body: 'Every allergy travels from the reservation into the ticket automatically.', icon: 'guests' },
+      { title: 'Bar-to-table tabs',        body: 'One tab follows a guest from the rooftop to the booth — no friction, no lost drinks.', icon: 'inventory' },
     ],
   },
   {
-    title: "Back of house",
-    items: [
-      { t: "Kitchen display", d: "Course timing, rail grouping and ticket states that match how chefs actually work." },
-      { t: "Inventory & recipes", d: "Weighted pours, COGS by plate and auto-86 when a prep bin runs dry." },
-      { t: "Procurement", d: "One-tap purchase orders to your suppliers with delivery reconciliation." },
+    id: 'operations', eyebrow: '02 · Operations',
+    title: 'Back-of-house that does the thinking.',
+    body: 'Inventory, purchasing, menu engineering, and labour — connected, so a price change in Monday\'s truck shows up in Friday\'s margin without anyone typing it twice.',
+    features: [
+      { title: 'Forecasted pars',          body: 'Weather, events, day-of-week. Replenishment you can actually trust.', icon: 'inventory' },
+      { title: 'Recipe-level costing',     body: 'Each pour, plate, and garnish costed to the gram. Margins surface, not bury.', icon: 'menu' },
+      { title: 'Roster + labour cost',     body: 'Schedule by role, by station, by tips. Compliance baked in, not bolted on.', icon: 'staff' },
+      { title: 'Multi-venue purchasing',   body: 'One supplier list across every property. One invoice reconciliation instead of six.', icon: 'calendar' },
     ],
   },
   {
-    title: "Hotel",
-    items: [
-      { t: "PMS", d: "Room grid, housekeeping, folios and channel manager — all inside Barista." },
-      { t: "Guest app", d: "Mobile check-in, room service and in-stay upsells branded as yours." },
-      { t: "Revenue tools", d: "Dynamic pricing, LOS rules and forecasting with pace reports." },
+    id: 'growth', eyebrow: '03 · Growth',
+    title: 'Guest memory that grows with you.',
+    body: 'Every visit teaches Maison something. It surfaces at the right moment — never as a pop-up, always as a whisper.',
+    features: [
+      { title: 'Guest dossiers',           body: '14 visits of history in one card: drinks, tables, tempo, allergies, stories.', icon: 'guests' },
+      { title: 'Service AI',               body: 'A quiet, always-on assistant for your host, manager, and sommelier.', icon: 'insights' },
+      { title: 'Rooms + F&B + events',     body: 'One folio, one loyalty tier, one story arc per guest. Finally.', icon: 'rooms' },
+      { title: 'Morning read',             body: 'A 7:00 AM written brief of last night. No dashboards, just the paragraph you needed.', icon: 'calendar' },
     ],
   },
-];
-
-const compare = [
-  { label: "Offline-first POS", a: true, b: true, c: false },
-  { label: "Hotel PMS included", a: true, b: false, c: false },
-  { label: "Reservations & deposits", a: true, b: true, c: true },
-  { label: "Multi-venue sync", a: true, b: false, c: true },
-  { label: "Weighted pour control", a: true, b: false, c: false },
-  { label: "AI prep routing", a: true, b: false, c: false },
-  { label: "Open API", a: true, b: true, c: false },
 ];
 ---
+<BaseLayout title="Features — Maison" current="features">
 
-<BaseLayout title="Features — Barista">
-  <section class="relative px-5 pt-20">
-    <div class="mx-auto max-w-5xl text-center">
-      <span class="chip reveal">Features</span>
-      <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Everything a venue needs,
-        <span class="gradient-text animate-gradient">nothing it doesn’t.</span>
-      </h1>
-      <p class="reveal mx-auto mt-6 max-w-2xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Barista is a full hospitality operating system. Front of house, back of house, rooms and stays — all stitched together with a tactile interface you actually enjoy using.
-      </p>
-    </div>
+  <!-- Hero -->
+  <section class="relative overflow-hidden pb-24 pt-36 sm:pb-32 sm:pt-44">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-80"></div>
+    <ParallaxLayer speed={-0.08} class="pointer-events-none absolute -top-24 right-0 h-[400px] w-[400px] -z-10">
+      <div class="h-full w-full rounded-full bg-brass-100/70 blur-3xl"></div>
+    </ParallaxLayer>
 
-    <div class="mx-auto mt-16 max-w-5xl">
-      <div class="card-3d reveal relative mx-auto">
-        <DashboardMock />
+    <div class="container-edge">
+      <div class="max-w-3xl">
+        <Reveal class="eyebrow mb-6 flex items-center gap-3 text-ink-500">
+          <span class="h-px w-8 bg-ink-400"></span>
+          <span>The craft, unfolded</span>
+        </Reveal>
+        <Reveal>
+          <h1 class="font-display text-5xl leading-[1.02] tracking-tightest text-ink sm:text-7xl">
+            Everything a <em class="not-italic italic-serif"><span class="underline-brass">house</span></em> runs on<br/>
+            <span class="text-ink-500">— made to feel like one tool.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={120}>
+          <p class="mt-8 max-w-xl text-lg text-ink-500">
+            Three pillars, seventeen modules, zero seams. Maison isn't a suite —
+            it's a single, opinionated instrument for hospitality.
+          </p>
+        </Reveal>
       </div>
+
+      <!-- Anchor chips -->
+      <Reveal delay={220} class="mt-14 flex flex-wrap gap-2">
+        {pillars.map((p) => (
+          <a href={`#${p.id}`} class="chip bg-paper/60 backdrop-blur transition-colors hover:border-ink hover:bg-ink hover:text-paper">
+            {p.eyebrow}
+          </a>
+        ))}
+      </Reveal>
     </div>
   </section>
 
-  {categories.map((cat, ci) => (
-    <section class="relative px-5 py-20">
-      <div class="mx-auto max-w-7xl">
-        <div class="flex items-end justify-between">
-          <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">Chapter {String(ci + 1).padStart(2, "0")}</p>
-            <h2 class="mt-2 text-3xl font-semibold md:text-5xl">{cat.title}</h2>
-          </div>
-          <a href="#" class="hidden text-sm text-[var(--text-muted)] hover:text-[var(--text)] md:block">Read the docs →</a>
-        </div>
+  <!-- Pillar sections -->
+  {pillars.map((p, idx) => (
+    <section id={p.id} class={`relative py-24 sm:py-32 ${idx % 2 === 1 ? 'bg-paper-warm/50' : ''}`}>
+      {idx % 2 === 1 && (
+        <Fragment>
+          <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent"></div>
+        </Fragment>
+      )}
 
-        <div class="mt-10 grid gap-5 md:grid-cols-3">
-          {cat.items.map((it, i) => (
-            <FeatureCard
-              title={it.t}
-              description={it.d}
-              icon={`<span class='text-xs font-bold'>${String(i+1).padStart(2, '0')}</span>`}
-              gradient={ci === 0 ? "from-brand-500 to-accent-500" : ci === 1 ? "from-mint-400 to-brand-500" : "from-amber-400 to-accent-500"}
-              delay={i * 80}
-            />
-          ))}
+      <div class="container-edge relative">
+        <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div class="lg:sticky lg:top-32 lg:self-start">
+            <Reveal class="eyebrow mb-6 flex items-center gap-3 text-ink-500">
+              <span class="h-px w-8 bg-ink-400"></span>
+              <span>{p.eyebrow}</span>
+            </Reveal>
+            <Reveal>
+              <h2 class="font-display text-4xl leading-[1.06] tracking-tightest text-ink sm:text-5xl">
+                {p.title}
+              </h2>
+            </Reveal>
+            <Reveal delay={120}>
+              <p class="mt-6 max-w-xl text-ink-500">{p.body}</p>
+            </Reveal>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            {p.features.map((f, i) => (
+              <FeatureCard
+                index={`${String(i + 1).padStart(2, '0')}`}
+                title={f.title}
+                body={f.body}
+                icon={f.icon as any}
+                tone={idx === 0 && i === 0 ? 'ink' : idx === 1 && i === 2 ? 'warm' : 'paper'}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   ))}
 
-  <!-- Comparison -->
-  <section class="relative px-5 py-20">
-    <div class="mx-auto max-w-5xl">
-      <SectionHeading eyebrow="Side-by-side" title="How Barista compares" subtitle="A few of the alternatives teams consider before they choose us." />
+  <!-- Timeline / migration -->
+  <section class="relative overflow-hidden bg-ink py-24 text-paper sm:py-32">
+    <div class="container-edge">
+      <div class="max-w-3xl">
+        <Reveal class="eyebrow mb-6 text-paper/50 flex items-center gap-3">
+          <span class="h-px w-8 bg-paper/40"></span>
+          Migration
+        </Reveal>
+        <Reveal>
+          <h2 class="font-display text-4xl leading-[1.04] tracking-tightest sm:text-6xl">
+            Six days, average.<br/>
+            <span class="text-paper/50">Your floor never sees a gap.</span>
+          </h2>
+        </Reveal>
+      </div>
 
-      <div class="mt-10 overflow-hidden rounded-3xl glass">
-        <div class="grid grid-cols-4 border-b border-white/10 px-6 py-4 text-sm font-semibold">
-          <span></span>
-          <span class="text-center">Barista</span>
-          <span class="text-center text-[var(--text-muted)]">Legacy POS</span>
-          <span class="text-center text-[var(--text-muted)]">Booking-only</span>
-        </div>
-        {compare.map((row, i) => (
-          <div class:list={["grid grid-cols-4 px-6 py-4 text-sm", i % 2 && "bg-white/5 dark:bg-white/5"]}>
-            <span>{row.label}</span>
-            {[row.a, row.b, row.c].map((v, idx) => (
-              <span class="flex justify-center">
-                {v ? (
-                  <span class={idx === 0 ? "grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white" : "text-emerald-400"}>
-                    <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                  </span>
-                ) : (
-                  <span class="text-[var(--text-muted)]">—</span>
-                )}
-              </span>
-            ))}
-          </div>
+      <div class="mt-16 grid gap-px overflow-hidden border border-paper/10 bg-paper/10 md:grid-cols-4">
+        {[
+          { day: 'Day 0',  title: 'Discovery call', body: 'We read the room — literally. Site walk, team, stack, peak hours.' },
+          { day: 'Day 1–3', title: 'Data migration', body: 'Menu, guests, stock, forward reservations. Audited twice.' },
+          { day: 'Day 4–5', title: 'Staff training', body: 'Pre-shift walkthroughs. No one learns during service.' },
+          { day: 'Day 6',  title: 'Go live',        body: 'Two engineers on-site for the first Friday. You don\'t feel it.' },
+        ].map((s, i) => (
+          <Reveal delay={i * 100}>
+            <div class="h-full bg-ink p-8">
+              <div class="mono text-[0.68rem] tracking-[0.22em] text-brass-300">{s.day}</div>
+              <h3 class="mt-4 font-display text-2xl tracking-tight text-paper">{s.title}</h3>
+              <p class="mt-3 text-[0.92rem] text-paper/60">{s.body}</p>
+            </div>
+          </Reveal>
         ))}
       </div>
     </div>
   </section>
+
+  <!-- CTA -->
+  <section class="relative py-24">
+    <div class="container-edge">
+      <Reveal mode="scale">
+        <div class="border border-ink/15 bg-paper-warm/60 p-12 text-center sm:p-20">
+          <h2 class="font-display text-4xl tracking-tightest text-ink sm:text-5xl">See Maison in your room.</h2>
+          <p class="mx-auto mt-4 max-w-lg text-ink-500">45-minute walkthrough, configured to your venue type. No slides we haven't earned.</p>
+          <div class="mt-10 flex flex-wrap justify-center gap-3">
+            <a href="/contact" class="btn-primary">Book a walkthrough</a>
+            <a href="/pricing" class="btn-ghost">See pricing</a>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
 </BaseLayout>

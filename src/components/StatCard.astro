@@ -3,40 +3,57 @@ interface Props {
   label: string;
   value: string;
   delta?: string;
-  deltaDirection?: "up" | "down";
-  icon?: string;
-  gradient?: string;
-  delay?: number;
+  trend?: 'up' | 'down' | 'flat';
+  hint?: string;
+  sparkline?: number[];
+  tone?: 'paper' | 'ink';
+  class?: string;
 }
-const { label, value, delta, deltaDirection = "up", icon, gradient = "from-brand-500 to-accent-500", delay = 0 } = Astro.props;
+const {
+  label, value, delta, trend = 'up', hint, sparkline, tone = 'paper', class: className = '',
+} = Astro.props;
+
+const trendColor =
+  trend === 'up' ? 'text-brass-600' :
+  trend === 'down' ? 'text-red-600' :
+  'text-ink-400';
+
+const arrow = trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→';
+
+let path = '';
+if (sparkline && sparkline.length > 1) {
+  const max = Math.max(...sparkline);
+  const min = Math.min(...sparkline);
+  const range = max - min || 1;
+  const w = 100, h = 32;
+  path = sparkline.map((v, i) => {
+    const x = (i / (sparkline.length - 1)) * w;
+    const y = h - ((v - min) / range) * h;
+    return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+}
+
+const base = tone === 'ink'
+  ? 'bg-ink text-paper border-ink/20'
+  : 'bg-paper text-ink border-ink/10';
 ---
-<article class="reveal card-3d relative overflow-hidden rounded-3xl glass p-5" style={`transition-delay:${delay}ms`}>
-  <div class="flex items-start justify-between">
-    <div>
-      <p class="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">{label}</p>
-      <p class="tilt-layer mt-2 text-3xl font-semibold">{value}</p>
-      {delta && (
-        <p class:list={["mt-1 inline-flex items-center gap-1 text-xs font-semibold", deltaDirection === "up" ? "text-emerald-400" : "text-rose-400"]}>
-          <svg viewBox="0 0 24 24" class:list={["h-3 w-3", deltaDirection === "down" && "rotate-180"]} fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M10 7h7v7"/></svg>
-          {delta}
-        </p>
-      )}
+<div class={`relative overflow-hidden border p-6 ${base} ${className}`}>
+  <div class="flex items-start justify-between gap-4">
+    <div class="min-w-0">
+      <div class={`eyebrow ${tone === 'ink' ? 'text-paper/50' : 'text-ink-500'}`}>{label}</div>
+      <div class="num mt-3 text-3xl leading-none tracking-tightest">{value}</div>
+      {hint && <div class={`mt-2 text-[0.72rem] ${tone === 'ink' ? 'text-paper/50' : 'text-ink-400'}`}>{hint}</div>}
     </div>
-    {icon && (
-      <span class={`tilt-layer grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br ${gradient} text-white shadow-lg`}>
-        <Fragment set:html={icon} />
-      </span>
+    {delta && (
+      <div class={`mono text-[0.75rem] ${trendColor}`}>
+        {arrow} {delta}
+      </div>
     )}
   </div>
 
-  <svg viewBox="0 0 120 40" class="mt-4 h-10 w-full">
-    <defs>
-      <linearGradient id={`g-${label.replace(/\s+/g, '')}`} x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0" stop-color="#3b5bff" stop-opacity="0.55"/>
-        <stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
-      </linearGradient>
-    </defs>
-    <path d="M0 30 C 15 20, 25 28, 40 18 S 70 32, 85 14 S 110 22, 120 10 L 120 40 L 0 40 Z" fill={`url(#g-${label.replace(/\s+/g, '')})`}/>
-    <path d="M0 30 C 15 20, 25 28, 40 18 S 70 32, 85 14 S 110 22, 120 10" fill="none" stroke="#ff3d8a" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-</article>
+  {path && (
+    <svg viewBox="0 0 100 32" preserveAspectRatio="none" class="mt-4 h-10 w-full" fill="none">
+      <path d={path} stroke="currentColor" class={trend === 'up' ? 'text-brass-500' : 'text-ink-400'} stroke-width="1.25"/>
+    </svg>
+  )}
+</div>

@@ -1,124 +1,133 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionHeading from "../components/SectionHeading.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
+import ParallaxLayer from '../components/ParallaxLayer.astro';
 
 const platforms = [
-  {
-    name: "macOS",
-    version: "4.0.2 · Universal",
-    size: "142 MB",
-    gradient: "from-slate-500 to-slate-900",
-    icon: "<path d='M16.5 2.5c-.9 1-2.2 1.7-3.5 1.6-.2-1.3.4-2.7 1.3-3.6.9-1 2.3-1.6 3.5-1.6.1 1.3-.4 2.6-1.3 3.6zM19.8 17.2c-.5 1.1-.7 1.6-1.3 2.6-.9 1.4-2.2 3.1-3.8 3.1-1.4 0-1.8-.9-3.7-.9-1.9 0-2.3.9-3.8.9-1.6 0-2.8-1.6-3.7-3C.7 16.2.4 11.2 3.4 8.5c1-.9 2.3-1.4 3.6-1.4 1.4 0 2.3.9 3.7.9 1.3 0 2.1-.9 3.8-.9 1.2 0 2.5.6 3.4 1.6-3 1.6-2.5 5.9.9 7.5z'/>",
-  },
-  {
-    name: "Windows",
-    version: "4.0.2 · x64 / ARM",
-    size: "128 MB",
-    gradient: "from-brand-500 to-brand-700",
-    icon: "<path d='M3 5.5 11 4v8H3zM13 3.8l8-1.3V12h-8zM3 12h8v8l-8-1.5zM13 12h8v9.5L13 20z'/>",
-  },
-  {
-    name: "iPad / iOS",
-    version: "4.0 · iOS 16+",
-    size: "On the App Store",
-    gradient: "from-accent-500 to-accent-600",
-    icon: "<rect x='5' y='2' width='14' height='20' rx='3'/><circle cx='12' cy='18' r='1'/>",
-  },
-  {
-    name: "Android",
-    version: "4.0 · Android 11+",
-    size: "On Google Play",
-    gradient: "from-mint-400 to-mint-500",
-    icon: "<path d='M7 7h10l1 5a4 4 0 1 1-12 0zM9 4l1 2M15 4l-1 2M8 15v4M16 15v4'/>",
-  },
-  {
-    name: "Linux",
-    version: "4.0.2 · AppImage",
-    size: "118 MB",
-    gradient: "from-amber-400 to-rose-500",
-    icon: "<circle cx='12' cy='10' r='4'/><path d='M7 20c1-2 3-3 5-3s4 1 5 3'/>",
-  },
-  {
-    name: "Web",
-    version: "Always the latest",
-    size: "Zero install",
-    gradient: "from-purple-400 to-brand-500",
-    icon: "<circle cx='12' cy='12' r='9'/><path d='M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18'/>",
-  },
-];
-
-const changelog = [
-  { v: "v4.0.2", d: "Faster offline sync, new chip-based taxonomy filter in reports." },
-  { v: "v4.0.0", d: "Rewritten POS engine, hotel PMS GA, guest memory." },
-  { v: "v3.9.4", d: "Pour weights, automated 86-lists, Stripe Terminal S700." },
+  { os: 'iPadOS',   title: 'Maison Service',   body: 'The floor-facing POS. Optimised for 11" and 12.9" iPad Pro, wired to your network.', version: '4.2.1', size: '148 MB', cta: 'Download for iPad', hint: 'iPadOS 16+' },
+  { os: 'macOS',    title: 'Maison Manager',   body: 'The manager\'s control room. Menus, rosters, inventory, insights.',                    version: '4.2.1', size: '94 MB',  cta: 'Download for Mac',  hint: 'macOS 13+ · Apple silicon' },
+  { os: 'Windows',  title: 'Maison Manager',   body: 'Same Manager, on Windows. Signed, packaged, and ready for locked-down fleet installs.', version: '4.2.1', size: '112 MB', cta: 'Download for Windows', hint: 'Windows 11 · x64' },
+  { os: 'Android',  title: 'Maison Handheld',  body: 'A pocket POS for terrace, pool, and in-room service.',                                   version: '4.2.1', size: '42 MB',  cta: 'Get on Google Play', hint: 'Android 12+' },
 ];
 ---
+<BaseLayout title="Download Maison" current="download">
 
-<BaseLayout title="Download — Barista">
-  <section class="relative px-5 pt-20">
-    <div class="mx-auto max-w-5xl text-center">
-      <span class="chip reveal">Downloads</span>
-      <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Install Barista
-        <span class="gradient-text animate-gradient">everywhere.</span>
-      </h1>
-      <p class="reveal mx-auto mt-6 max-w-xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Native apps for every platform your team uses. Your data syncs in real-time and works beautifully offline.
-      </p>
-    </div>
-  </section>
+  <section class="relative overflow-hidden pb-16 pt-36 sm:pt-44">
+    <div class="hero-aurora absolute inset-0 -z-10"></div>
+    <div class="grain absolute inset-0 -z-10"></div>
+    <ParallaxLayer speed={-0.1} class="pointer-events-none absolute -top-20 left-0 h-[420px] w-[420px] -z-10">
+      <div class="h-full w-full rounded-full bg-brass-100 blur-3xl"></div>
+    </ParallaxLayer>
 
-  <section class="relative px-5 py-16">
-    <div class="mx-auto grid max-w-7xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {platforms.map((p, i) => (
-        <article class="reveal card-3d group relative overflow-hidden rounded-3xl glass p-6" style={`transition-delay:${i*60}ms`}>
-          <div class={`tilt-layer grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${p.gradient} text-white shadow-lg`}>
-            <svg viewBox="0 0 24 24" class="h-6 w-6" fill={p.name === "macOS" ? "currentColor" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <Fragment set:html={p.icon} />
-            </svg>
-          </div>
-          <h3 class="tilt-layer mt-5 text-xl font-semibold">{p.name}</h3>
-          <p class="tilt-layer mt-1 text-sm text-[var(--text-muted)]">{p.version} · {p.size}</p>
-
-          <div class="tilt-layer mt-6 flex items-center gap-2">
-            <a href="#" class="btn-primary !py-2 !px-4 text-sm">
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 11l6 6 6-6M5 21h14"/></svg>
-              Download
-            </a>
-            <a href="#" class="btn-ghost !py-2 !px-4 text-sm">Release notes</a>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="relative px-5 py-20">
-    <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
-      <div class="reveal">
-        <SectionHeading eyebrow="Changelog" title="What’s new" align="left" />
-        <div class="mt-8 space-y-5">
-          {changelog.map((c) => (
-            <div class="flex items-start gap-4">
-              <span class="mt-1 grid h-8 w-8 flex-none place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white text-xs font-semibold">{c.v.replace("v", "")}</span>
-              <p class="text-sm text-[var(--text-muted)]">{c.d}</p>
-            </div>
-          ))}
-        </div>
+    <div class="container-edge">
+      <div class="max-w-3xl">
+        <Reveal class="eyebrow mb-6 flex items-center gap-3 text-ink-500">
+          <span class="h-px w-8 bg-ink-400"></span>Install
+        </Reveal>
+        <Reveal>
+          <h1 class="font-display text-5xl leading-[1.02] tracking-tightest text-ink sm:text-7xl">
+            Signed, signed, signed —<br/>
+            <span class="text-ink-500">then running.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={120}>
+          <p class="mt-8 max-w-xl text-lg text-ink-500">
+            Notarised for macOS, signed for Windows, shipped from the App Store and Google Play.
+            Install in under four minutes, on-site or remote.
+          </p>
+        </Reveal>
       </div>
-
-      <aside class="reveal glass rounded-3xl p-6" style="transition-delay:120ms;">
-        <p class="text-sm font-semibold">System requirements</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-[var(--text-muted)]">
-          <li>macOS 12 or later · 4GB RAM</li>
-          <li>Windows 10/11 · x64 or ARM</li>
-          <li>iPad with iPadOS 16 or later</li>
-          <li>Android 11+ with 3GB RAM</li>
-          <li>Any modern browser for Barista Web</li>
-        </ul>
-        <div class="divider-gradient my-6"></div>
-        <p class="text-sm">Need an enterprise installer or MDM package?</p>
-        <a href="/contact" class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-500 hover:text-accent-500">Contact sales →</a>
-      </aside>
     </div>
   </section>
+
+  <section class="relative py-24">
+    <div class="container-edge">
+      <div class="grid gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-2">
+        {platforms.map((p, i) => (
+          <Reveal delay={i * 80}>
+            <article class="group relative h-full bg-paper p-10 transition-colors hover:bg-paper-warm/60">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="mono text-[0.68rem] tracking-[0.22em] text-ink-400">{p.os.toUpperCase()}</div>
+                  <h3 class="mt-4 font-display text-3xl leading-tight tracking-tight text-ink">{p.title}</h3>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center border border-ink/15 text-ink">
+                  {p.os === 'iPadOS' && <svg viewBox="0 0 20 20" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="14" height="16" rx="1"/><path d="M9 16h2"/></svg>}
+                  {p.os === 'macOS' && <svg viewBox="0 0 20 20" class="h-5 w-5" fill="currentColor"><path d="M13.1 2.6c.4-.5.8-1.2.6-2-.7 0-1.5.5-2 1-.4.5-.8 1.2-.6 1.9.8 0 1.5-.5 2-.9Zm1.9 5.2c-.5-.7-1.2-1.1-1.9-1.1-.8 0-1.1.4-1.8.4-.7 0-1.3-.4-2-.4-1 0-2 .6-2.6 1.6-1.1 1.9-.3 4.6.8 6.1.5.7 1.1 1.5 2 1.5.8 0 1.1-.5 2-.5.9 0 1.2.5 2 .5.9 0 1.5-.8 2-1.5.7-.9 1-1.9 1-1.9-1.5-.6-1.9-2.6-1.5-3.7Z"/></svg>}
+                  {p.os === 'Windows' && <svg viewBox="0 0 20 20" class="h-5 w-5" fill="currentColor"><path d="M2 4.5 9 3.5v7H2V4.5ZM10 3.4l8-1.2V10h-8V3.4ZM2 11.5h7v6L2 16.4v-4.9ZM10 11.5h8v6.2l-8-1.2v-5Z"/></svg>}
+                  {p.os === 'Android' && <svg viewBox="0 0 20 20" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 14h10M6 14V8a4 4 0 0 1 8 0v6M7 8 6 6M13 8l1-2M8.5 11h.01M11.5 11h.01M7 15v2M13 15v2" stroke-linecap="square"/></svg>}
+                </div>
+              </div>
+
+              <p class="mt-6 max-w-sm text-[0.95rem] text-ink-500">{p.body}</p>
+
+              <div class="mono mt-8 flex items-center gap-4 text-[0.7rem] text-ink-400">
+                <span>v{p.version}</span>
+                <span class="h-3 w-px bg-ink/15"></span>
+                <span>{p.size}</span>
+                <span class="h-3 w-px bg-ink/15"></span>
+                <span>{p.hint}</span>
+              </div>
+
+              <div class="mt-6 flex flex-wrap items-center gap-3">
+                <a href="#" class="btn-primary">{p.cta}</a>
+                <a href="#" class="text-sm text-ink-500 hover:text-ink">Release notes →</a>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Hardware -->
+  <section class="relative overflow-hidden bg-paper-warm/60 py-24">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent"></div>
+
+    <div class="container-edge relative">
+      <SectionHeading eyebrow="Hardware" title="Certified, or bring your own." lead="Maison ships with its own terminals, KDS, printers, and card readers — or runs on the ones you already trust." />
+
+      <div class="mt-12 grid gap-4 md:grid-cols-3">
+        {[
+          { name: 'Maison Terminal', spec: '15" 4K · Apple silicon · silent · brass frame', price: '€890' },
+          { name: 'Maison Pass',     spec: 'KDS · 21" · waterproof · kitchen-safe',          price: '€620' },
+          { name: 'Maison Reader',   spec: 'Card + contactless · PCI v7 · magnetic dock',    price: '€210' },
+        ].map((h, i) => (
+          <Reveal delay={i * 80}>
+            <div class="relative overflow-hidden border border-ink/10 bg-paper p-8">
+              <div class="aspect-[5/3] bg-gradient-to-br from-ink-50 to-paper-cream border border-ink/10 grid place-items-center text-ink-300">
+                <svg class="h-14 w-14" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><rect x="6" y="8" width="36" height="26" rx="1"/><path d="M16 40h16M24 34v6" stroke-linecap="square"/></svg>
+              </div>
+              <h3 class="mt-5 font-display text-xl tracking-tight text-ink">{h.name}</h3>
+              <div class="mono mt-2 text-[0.7rem] text-ink-400">{h.spec}</div>
+              <div class="mt-5 flex items-center justify-between">
+                <div class="num text-2xl text-ink">{h.price}</div>
+                <a href="/contact" class="text-sm text-ink-500 hover:text-ink">Order →</a>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Support strip -->
+  <section class="relative py-24">
+    <div class="container-edge">
+      <Reveal class="grid items-center gap-8 border border-ink/10 bg-ink p-10 text-paper md:grid-cols-[1.4fr_1fr]">
+        <div>
+          <div class="eyebrow text-brass-300">Support</div>
+          <h3 class="mt-3 font-display text-3xl tracking-tightest sm:text-4xl">We answer in minutes, not tickets.</h3>
+          <p class="mt-4 max-w-xl text-paper/70">A human, reachable on Slack, WhatsApp, and phone — from first contact to your hundredth Friday night.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 md:justify-end">
+          <a href="/contact" class="btn-brass">Talk to support</a>
+          <a href="#" class="inline-flex items-center justify-center border border-paper/20 px-5 py-3 text-sm text-paper transition-colors hover:border-paper">Status page</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
 </BaseLayout>

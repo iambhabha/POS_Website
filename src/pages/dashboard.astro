@@ -1,141 +1,220 @@
 ---
-import DashboardLayout from "../layouts/DashboardLayout.astro";
-import StatCard from "../components/StatCard.astro";
-import LineChart from "../components/LineChart.astro";
-import DonutChart from "../components/DonutChart.astro";
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import StatCard from '../components/StatCard.astro';
+import LineChart from '../components/LineChart.astro';
+import DonutChart from '../components/DonutChart.astro';
+import ChatUI from '../components/ChatUI.astro';
+import Reveal from '../components/Reveal.astro';
 
-const sidebar = [
-  { href: "/dashboard", label: "Overview", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='9' rx='1.5'/><rect x='14' y='3' width='7' height='5' rx='1.5'/><rect x='14' y='12' width='7' height='9' rx='1.5'/><rect x='3' y='16' width='7' height='5' rx='1.5'/></svg>" },
-  { href: "/dashboard/pos", label: "POS", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 10h18M8 15h3'/></svg>" },
-  { href: "/dashboard/reservations", label: "Reservations", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2'/><path d='M16 2v4M8 2v4M3 10h18'/></svg>", badge: "12" },
-  { href: "/dashboard/menu", label: "Menu", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 4h16v4H4zM4 12h16v4H4zM4 20h10'/></svg>" },
-  { href: "/dashboard/inventory", label: "Inventory", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 8l-9-5-9 5 9 5 9-5z'/><path d='M3 13l9 5 9-5M3 18l9 5 9-5'/></svg>" },
-  { href: "/dashboard/insights", label: "Insights", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='M7 15l4-4 4 2 5-6'/></svg>" },
-  { href: "/dashboard/team", label: "Team", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7'/></svg>" },
-  { href: "/admin", label: "Admin panel", icon: "<svg viewBox='0 0 24 24' class='h-4 w-4' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 15l-3 6h6l-3-6zM5 3h14l-1 9H6z'/></svg>" },
+const reservations = [
+  { t: '19:00', name: 'Volkov',    size: 2, note: 'Anniversary · cake after mains', flag: 'vip' },
+  { t: '19:15', name: 'Larsen',    size: 3, note: '',                               flag: '' },
+  { t: '19:30', name: 'Abate',     size: 4, note: 'Walnut allergy · back booth',    flag: 'allergy' },
+  { t: '19:45', name: 'Marin',     size: 2, note: '',                               flag: '' },
+  { t: '20:00', name: 'Ishikawa',  size: 6, note: 'Private corner',                 flag: 'private' },
+  { t: '20:15', name: 'Park',      size: 2, note: 'Gluten-free',                    flag: 'allergy' },
+  { t: '20:30', name: 'Bennett',   size: 4, note: '',                               flag: '' },
+  { t: '20:45', name: 'Hoffmann',  size: 5, note: 'Regular · Chablis to start',     flag: 'vip' },
+  { t: '21:00', name: 'Pires',     size: 2, note: '',                               flag: '' },
 ];
 
 const orders = [
-  { id: "#48211", table: "Bar · Seat 3", items: 4, total: "$184.20", status: "Served" },
-  { id: "#48210", table: "Patio · T12", items: 7, total: "$412.75", status: "Preparing" },
-  { id: "#48209", table: "Main · T04", items: 3, total: "$96.40", status: "Served" },
-  { id: "#48208", table: "Main · T07", items: 5, total: "$248.90", status: "Sent" },
-  { id: "#48207", table: "Bar · Seat 8", items: 2, total: "$42.10", status: "Served" },
+  { t: 'T-07', items: 'Uni linguine · Pét-nat',       minutes: 12, stage: 'mains', state: 'warn' },
+  { t: 'T-12', items: 'Smoked duck · Negroni',        minutes: 4,  stage: 'mains', state: 'ok' },
+  { t: 'B-03', items: 'Martini ×2, Espresso',         minutes: 1,  stage: 'bar',   state: 'ok' },
+  { t: 'T-04', items: 'Tasting menu (7) · Wine pair', minutes: 28, stage: 'course 4', state: 'ok' },
+  { t: 'T-18', items: 'Oysters ×6 · Chablis 1er',     minutes: 2,  stage: 'apéro', state: 'ok' },
+  { t: 'R-204', items: 'Club sandwich, fries',        minutes: 8,  stage: 'room',  state: 'ok' },
 ];
 ---
+<DashboardLayout title="Service · Maison" section="Service" venue="Kenzo House · Copenhagen" current="overview">
 
-<DashboardLayout
-  title="Dashboard — Barista"
-  items={sidebar}
-  footer={{ name: "Alex Moreau", role: "Front of House Manager" }}
-  pageTitle="Overview"
-  pageSubtitle="Monday, Apr 19 · Service starts in 42 minutes"
->
-  <!-- Stat cards -->
-  <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    <StatCard label="Revenue today" value="$12,482" delta="+14.2%" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>" gradient="from-brand-500 to-brand-700" delay={0} />
-    <StatCard label="Covers" value="284" delta="+6.4%" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7'/></svg>" gradient="from-accent-500 to-accent-600" delay={80} />
-    <StatCard label="Avg ticket" value="$43.90" delta="+2.1%" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6L9 17l-5-5'/></svg>" gradient="from-mint-400 to-mint-500" delay={160} />
-    <StatCard label="Occupancy" value="86%" delta="-1.4%" deltaDirection="down" icon="<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12l9-8 9 8'/><path d='M5 10v10h14V10'/></svg>" gradient="from-amber-400 to-rose-500" delay={240} />
-  </section>
+  <!-- Page heading -->
+  <div id="overview" class="border-b border-ink/10">
+    <div class="px-6 py-8 sm:px-10">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <Reveal>
+          <div>
+            <div class="eyebrow text-ink-500">Friday · 18:42</div>
+            <h1 class="mt-2 font-display text-4xl tracking-tightest text-ink sm:text-5xl">Tonight's service</h1>
+            <p class="mt-2 text-sm text-ink-500">Covers: 142 booked · 12 walk-ins expected · 4 VIP, 2 allergies flagged.</p>
+          </div>
+        </Reveal>
 
-  <!-- Charts row -->
-  <section class="mt-6 grid gap-4 lg:grid-cols-3">
-    <div class="lg:col-span-2">
-      <LineChart id="sales" />
-    </div>
-    <DonutChart />
-  </section>
-
-  <!-- Lower row: orders + upcoming reservations -->
-  <section class="mt-6 grid gap-4 lg:grid-cols-3">
-    <article class="reveal glass rounded-3xl p-6 lg:col-span-2">
-      <header class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-semibold">Active orders</p>
-          <p class="text-xs text-[var(--text-muted)]">Auto-refresh · 5s</p>
-        </div>
-        <button class="btn-ghost !py-1.5 !px-3 text-xs">View all</button>
-      </header>
-      <div class="mt-4 overflow-x-auto scrollbar-hidden">
-        <table class="w-full text-sm">
-          <thead class="text-xs uppercase tracking-wider text-[var(--text-muted)]">
-            <tr class="text-left">
-              <th class="py-3 pr-4 font-medium">Order</th>
-              <th class="py-3 pr-4 font-medium">Table</th>
-              <th class="py-3 pr-4 font-medium">Items</th>
-              <th class="py-3 pr-4 font-medium">Total</th>
-              <th class="py-3 pr-4 font-medium">Status</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white/10">
-            {orders.map((o) => (
-              <tr class="transition-colors hover:bg-white/5">
-                <td class="py-3 pr-4 font-semibold">{o.id}</td>
-                <td class="py-3 pr-4">{o.table}</td>
-                <td class="py-3 pr-4">{o.items}</td>
-                <td class="py-3 pr-4">{o.total}</td>
-                <td class="py-3 pr-4">
-                  <span class:list={[
-                    "rounded-full px-2.5 py-1 text-[11px] font-medium",
-                    o.status === "Served" && "bg-emerald-400/15 text-emerald-400",
-                    o.status === "Preparing" && "bg-amber-400/15 text-amber-400",
-                    o.status === "Sent" && "bg-brand-500/15 text-brand-500",
-                  ]}>{o.status}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Reveal delay={80} class="flex flex-wrap items-center gap-2">
+          <div class="flex items-center gap-1 border border-ink/15">
+            <button class="px-3 py-1.5 text-xs text-ink bg-ink/5">Today</button>
+            <button class="px-3 py-1.5 text-xs text-ink-500 hover:text-ink">Week</button>
+            <button class="px-3 py-1.5 text-xs text-ink-500 hover:text-ink">Month</button>
+          </div>
+          <button class="btn-ghost">Morning read →</button>
+          <button class="btn-primary">End of night</button>
+        </Reveal>
       </div>
-    </article>
+    </div>
+  </div>
 
-    <article class="reveal glass rounded-3xl p-6">
-      <header class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-semibold">Tonight’s bookings</p>
-          <p class="text-xs text-[var(--text-muted)]">Next 3 hours</p>
+  <!-- KPI grid -->
+  <section class="px-6 py-8 sm:px-10">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Reveal><StatCard label="Revenue" value="€14,682" delta="+8.4%" trend="up" hint="vs. last Friday" sparkline={[8,9,12,11,14,16,18,21,19,24,22,26,28,32]} tone="ink" /></Reveal>
+      <Reveal delay={60}><StatCard label="Covers" value="142" delta="+12" trend="up" hint="18:00 seating active" sparkline={[4,6,5,7,9,8,11,14,13,16,18,17,20,22]} /></Reveal>
+      <Reveal delay={120}><StatCard label="Avg check" value="€103" delta="−2%" trend="down" hint="Pairing down-trade" sparkline={[98,100,104,101,99,102,103,100,97,96,99,102,101,103]} /></Reveal>
+      <Reveal delay={180}><StatCard label="Labour cost" value="23.4%" delta="−0.8pp" trend="up" hint="Target 24%" sparkline={[30,28,27,26,26,25,25,24,24,24,23,23,23,23]} /></Reveal>
+    </div>
+  </section>
+
+  <!-- Main charts -->
+  <section class="grid gap-4 px-6 pb-8 sm:px-10 lg:grid-cols-[1.6fr_1fr]">
+    <Reveal><LineChart /></Reveal>
+    <Reveal delay={80}><DonutChart /></Reveal>
+  </section>
+
+  <!-- Reservations + Orders -->
+  <section class="grid gap-4 px-6 pb-8 sm:px-10 xl:grid-cols-[1.2fr_1fr]">
+    <!-- Reservations -->
+    <Reveal>
+      <div id="reservations" class="border border-ink/10 bg-paper">
+        <div class="flex items-center justify-between border-b border-ink/10 px-5 py-3">
+          <div>
+            <div class="eyebrow text-ink-500">Reservations · tonight</div>
+            <div class="mt-0.5 text-sm text-ink">9 seatings · 28 pax</div>
+          </div>
+          <div class="flex items-center gap-2 text-[0.68rem] text-ink-400 mono">
+            <span class="inline-flex h-1.5 w-1.5 rounded-full bg-brass-500"></span> VIP
+            <span class="inline-flex h-1.5 w-1.5 rounded-full bg-red-500"></span> Allergy
+            <span class="inline-flex h-1.5 w-1.5 rounded-full bg-ink"></span> Private
+          </div>
         </div>
-        <span class="chip !py-1 !px-2 text-[10px]">18 tables</span>
-      </header>
 
-      <ul class="mt-4 space-y-3">
-        {[
-          { name: "Camila S.", time: "19:00", size: "2", note: "Anniversary" },
-          { name: "Tomás R.", time: "19:30", size: "4", note: "VIP" },
-          { name: "Aya K.", time: "20:00", size: "6", note: "Gluten free" },
-          { name: "Noé B.", time: "20:30", size: "3" },
-        ].map((r) => (
-          <li class="flex items-center gap-3 rounded-2xl glass p-3">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-brand-400 to-accent-500 text-sm font-semibold text-white">{r.time}</span>
-            <div class="flex-1 min-w-0">
-              <p class="truncate text-sm font-semibold">{r.name}</p>
-              <p class="truncate text-xs text-[var(--text-muted)]">Party of {r.size}{r.note ? ` · ${r.note}` : ""}</p>
+        <ul class="divide-y divide-ink/5">
+          {reservations.map((r) => (
+            <li class="grid grid-cols-[60px_1fr_auto] items-center gap-4 px-5 py-3 transition-colors hover:bg-paper-warm/50">
+              <span class="mono text-sm text-ink-500">{r.t}</span>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 text-sm text-ink">
+                  {r.flag === 'vip' && <span class="inline-flex h-1.5 w-1.5 rounded-full bg-brass-500"></span>}
+                  {r.flag === 'allergy' && <span class="inline-flex h-1.5 w-1.5 rounded-full bg-red-500"></span>}
+                  {r.flag === 'private' && <span class="inline-flex h-1.5 w-1.5 rounded-full bg-ink"></span>}
+                  <span>{r.name}</span>
+                  <span class="mono text-ink-400">×{r.size}</span>
+                </div>
+                {r.note && <div class="mt-0.5 text-xs text-ink-500 truncate">{r.note}</div>}
+              </div>
+              <button class="text-[0.72rem] text-ink-500 hover:text-ink">Seat →</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Reveal>
+
+    <!-- Orders -->
+    <Reveal delay={80}>
+      <div id="orders" class="border border-ink/10 bg-paper">
+        <div class="flex items-center justify-between border-b border-ink/10 px-5 py-3">
+          <div>
+            <div class="eyebrow text-ink-500">Live orders</div>
+            <div class="mt-0.5 text-sm text-ink">6 active · 2 flagged</div>
+          </div>
+          <button class="text-[0.72rem] text-ink-500 hover:text-ink">Open KDS →</button>
+        </div>
+        <ul class="divide-y divide-ink/5">
+          {orders.map((o) => (
+            <li class="flex items-center gap-3 px-5 py-3 text-sm">
+              <span class="mono w-12 text-ink-500">{o.t}</span>
+              <div class="min-w-0 flex-1">
+                <div class="truncate text-ink">{o.items}</div>
+                <div class="mono text-[0.65rem] text-ink-400">{o.stage}</div>
+              </div>
+              <span class={`mono text-[0.72rem] ${o.state === 'warn' ? 'text-brass-600' : 'text-ink-500'}`}>
+                {o.minutes}m
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Reveal>
+  </section>
+
+  <!-- Chat with guest -->
+  <section class="grid gap-4 px-6 pb-8 sm:px-10 xl:grid-cols-[1fr_1.2fr]">
+    <Reveal>
+      <div id="floor" class="relative border border-ink/10 bg-paper p-6">
+        <div class="flex items-center justify-between">
+          <div class="eyebrow text-ink-500">Floor plan · 28/32</div>
+          <div class="flex items-center gap-3 text-[0.65rem] mono text-ink-400">
+            <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-ink"></span>Seated</span>
+            <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-brass-500"></span>Holding</span>
+            <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 border border-ink/30"></span>Open</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-8 gap-2">
+          {Array.from({length: 32}).map((_, i) => {
+            const state = i % 4 === 0 ? 'border border-ink/20' : i % 3 === 0 ? 'bg-brass-500 text-ink-950' : 'bg-ink text-paper';
+            const table = String(i + 1).padStart(2, '0');
+            return (
+              <div class={`aspect-square ${state} flex items-center justify-center text-[0.6rem] font-medium tracking-wide`}>
+                {table}
+              </div>
+            );
+          })}
+        </div>
+
+        <div class="mt-6 grid grid-cols-3 gap-3 border-t border-ink/10 pt-4 text-[0.72rem]">
+          <div><div class="text-ink-400">Longest tab</div><div class="mono mt-0.5 text-ink">T-04 · 2h 14m</div></div>
+          <div><div class="text-ink-400">Next seating</div><div class="mono mt-0.5 text-ink">19:15 Larsen</div></div>
+          <div><div class="text-ink-400">Walk-ins (queue)</div><div class="mono mt-0.5 text-ink">2 · ~22m</div></div>
+        </div>
+      </div>
+    </Reveal>
+
+    <Reveal delay={80}>
+      <ChatUI />
+    </Reveal>
+  </section>
+
+  <!-- Inventory alert -->
+  <section class="px-6 pb-16 sm:px-10">
+    <Reveal>
+      <div id="inventory" class="relative overflow-hidden border border-ink/10 bg-ink p-8 text-paper">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="eyebrow text-brass-300">Service AI · inventory</div>
+            <h3 class="mt-3 font-display text-2xl tracking-tightest sm:text-3xl">
+              Chablis '22 runs out at 21:40 at current pace.
+            </h3>
+            <p class="mt-3 max-w-xl text-paper/70 text-sm">
+              Based on tonight's by-glass sales (12 so far) and the Hoffmann party (5 pax, regular order at 20:45),
+              I recommend pulling a case from the cellar now or swapping suggestions to the Sancerre '22.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button class="inline-flex items-center border border-paper/20 px-4 py-2 text-xs text-paper transition-colors hover:border-paper">Swap to Sancerre</button>
+            <button class="btn-brass">Pull a case</button>
+          </div>
+        </div>
+
+        <!-- Stock bars -->
+        <div class="mt-8 grid gap-3 md:grid-cols-3">
+          {[
+            { name: 'Chablis Côte Lechet \'22', pct: 18, note: '6 / 34 bottles' },
+            { name: 'Negroni batch (pre-mix)',  pct: 62, note: '2.4L / 4L' },
+            { name: 'Uni (Hokkaido, 100g)',     pct: 42, note: '12 portions' },
+          ].map((s) => (
+            <div class="border border-paper/10 p-4">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-paper">{s.name}</span>
+                <span class="mono text-[0.68rem] text-paper/60">{s.note}</span>
+              </div>
+              <div class="mt-3 h-1 w-full bg-paper/10">
+                <div class={`h-full ${s.pct < 30 ? 'bg-brass-400' : 'bg-paper/60'}`} style={`width:${s.pct}%`}></div>
+              </div>
             </div>
-            <button class="grid h-8 w-8 place-items-center rounded-full glass">
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </article>
+          ))}
+        </div>
+      </div>
+    </Reveal>
   </section>
 
-  <!-- Bottom band: shortcuts -->
-  <section class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    {[
-      { t: "New order", d: "Open a tab and start firing tickets", g: "from-brand-500 to-accent-500" },
-      { t: "Add reservation", d: "Drop a guest on the floor plan", g: "from-accent-500 to-accent-600" },
-      { t: "86 an item", d: "Flag it across every terminal instantly", g: "from-amber-400 to-rose-500" },
-      { t: "Cash-in drawer", d: "Start a shift or reconcile float", g: "from-mint-400 to-mint-500" },
-    ].map((q, i) => (
-      <button class="reveal card-3d text-left glass rounded-3xl p-5 transition-transform" style={`transition-delay:${i*60}ms`}>
-        <span class={`tilt-layer grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br ${q.g} text-white`}>
-          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        </span>
-        <p class="tilt-layer mt-4 text-sm font-semibold">{q.t}</p>
-        <p class="tilt-layer mt-1 text-xs text-[var(--text-muted)]">{q.d}</p>
-      </button>
-    ))}
-  </section>
 </DashboardLayout>

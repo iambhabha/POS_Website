@@ -1,116 +1,76 @@
 ---
-import "../styles/global.css";
-import Sidebar from "../components/Sidebar.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
-interface SidebarItem { href: string; label: string; icon: string; badge?: string }
 interface Props {
   title: string;
-  description?: string;
-  items: SidebarItem[];
-  footer?: { name: string; role: string };
-  pageTitle?: string;
-  pageSubtitle?: string;
+  section?: string;
+  venue?: string;
+  current?: string;
 }
-const {
-  title,
-  description = "Barista dashboard",
-  items,
-  footer,
-  pageTitle,
-  pageSubtitle,
-} = Astro.props;
+const { title, section = 'Service', venue = 'Kenzo House · Copenhagen', current = 'overview' } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <title>{title}</title>
     <script is:inline>
-      (function () {
-        try {
-          const stored = localStorage.getItem("theme");
-          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const theme = stored || (prefersDark ? "dark" : "light");
-          if (theme === "dark") document.documentElement.classList.add("dark");
-        } catch (e) {}
-      })();
+      try {
+        const t = localStorage.getItem('theme') ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (t === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
     </script>
   </head>
-  <body class="relative min-h-screen">
-    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div class="absolute inset-0 grid-bg opacity-40"></div>
-      <div class="orb animate-gradient" style="width:520px;height:520px;top:-140px;left:-160px;background:radial-gradient(circle at 30% 30%,#3b5bff,transparent 60%);"></div>
-      <div class="orb animate-gradient" style="width:520px;height:520px;bottom:-100px;right:-120px;background:radial-gradient(circle at 40% 40%,#ff3d8a,transparent 60%);"></div>
-    </div>
+  <body>
+    <div class="flex min-h-dvh">
+      <Sidebar current={current} />
 
-    <div class="mx-auto flex max-w-[1440px] gap-4 p-4">
-      <Sidebar items={items} footer={footer} />
-
-      <div class="min-w-0 flex-1">
-        <header class="glass sticky top-4 z-20 flex items-center justify-between gap-4 rounded-3xl px-5 py-3.5">
-          <div class="min-w-0">
-            {pageTitle && <h1 class="truncate text-xl font-semibold">{pageTitle}</h1>}
-            {pageSubtitle && <p class="truncate text-xs text-[var(--text-muted)]">{pageSubtitle}</p>}
+      <div class="flex min-w-0 flex-1 flex-col">
+        <!-- Top bar -->
+        <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-ink/10 bg-paper/80 px-6 backdrop-blur">
+          <div class="flex items-center gap-3">
+            <div class="hidden text-[0.68rem] text-ink-400 mono sm:block">MAISON / {section.toUpperCase()}</div>
+            <div class="hidden h-4 w-px bg-ink/15 sm:block"></div>
+            <div class="text-sm text-ink">{venue}</div>
           </div>
+
           <div class="flex items-center gap-2">
-            <label class="relative hidden md:block">
-              <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              <input type="text" placeholder="Search anything…" class="w-64 rounded-full bg-white/60 dark:bg-white/5 py-2 pl-9 pr-4 text-sm ring-1 ring-inset ring-white/10 placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]" />
-            </label>
-            <button aria-label="Notifications" class="relative grid h-10 w-10 place-items-center rounded-full glass">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-              <span class="absolute -right-0.5 -top-0.5 grid h-5 min-w-[20px] place-items-center rounded-full bg-accent-500 px-1 text-[10px] font-semibold text-white">4</span>
-            </button>
+            <div class="hidden items-center gap-2 border border-ink/15 px-3 py-1.5 text-xs text-ink-500 md:flex">
+              <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M10 10l3 3" stroke-linecap="square"/></svg>
+              <span>Search orders, guests, menu…</span>
+              <span class="mono text-[0.62rem] text-ink-400">⌘K</span>
+            </div>
             <ThemeToggle />
-            <a href="/" class="ml-1 grid h-10 w-10 place-items-center rounded-full glass" aria-label="Exit dashboard">
-              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <button class="inline-flex h-9 w-9 items-center justify-center border border-ink/15 text-ink-500 transition-colors hover:border-ink hover:text-ink" aria-label="Notifications">
+              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6a4 4 0 1 1 8 0v3l1.5 2h-11L4 9V6zM6.5 13a1.5 1.5 0 0 0 3 0" stroke-linecap="square"/></svg>
+            </button>
+            <a href="/" class="inline-flex h-9 items-center border border-ink/15 px-3 text-xs text-ink-600 transition-colors hover:border-ink hover:text-ink">Exit</a>
           </div>
         </header>
 
-        <main class="pt-4">
+        <main class="flex-1 overflow-x-hidden">
           <slot />
         </main>
       </div>
     </div>
 
     <script>
+      // Reveal on scroll within dashboard
       const io = new IntersectionObserver((entries) => {
-        for (const e of entries) if (e.isIntersecting) { e.target.classList.add("is-visible", "aos-animate"); io.unobserve(e.target); }
-      }, { threshold: 0.1 });
-      document.querySelectorAll(".reveal, [data-aos]").forEach((el) => io.observe(el));
-
-      document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const dark = document.documentElement.classList.toggle("dark");
-          try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch(e) {}
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
         });
-      });
-
-      document.querySelectorAll<HTMLElement>(".card-3d").forEach((card) => {
-        let raf = 0;
-        card.addEventListener("mousemove", (e) => {
-          const r = card.getBoundingClientRect();
-          const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
-          const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(() => {
-            card.style.transform = `perspective(900px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg)`;
-          });
-        });
-        card.addEventListener("mouseleave", () => { card.style.transform = "perspective(900px) rotateX(0) rotateY(0)"; });
-      });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
     </script>
   </body>
 </html>

@@ -1,11 +1,19 @@
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()],
+  site: 'https://maison.example',
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+  ],
+  server: {
+    host: true,
   },
-  devToolbar: {
-    enabled: false,
+  vite: {
+    ssr: {
+      noExternal: ['gsap'],
+    },
   },
 });

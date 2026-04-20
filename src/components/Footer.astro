@@ -1,85 +1,99 @@
 ---
-import Logo from "./Logo.astro";
+import Logo from './Logo.astro';
 
 const cols = [
   {
-    title: "Product",
+    title: 'Product',
     links: [
-      { href: "/features", label: "Features" },
-      { href: "/pricing", label: "Pricing" },
-      { href: "/download", label: "Download" },
-      { href: "/dashboard", label: "Dashboard" },
+      { label: 'Features', href: '/features' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Download', href: '/download' },
+      { label: 'Dashboard', href: '/dashboard' },
     ],
   },
   {
-    title: "Company",
+    title: 'Venues',
     links: [
-      { href: "/contact", label: "Contact" },
-      { href: "#", label: "Careers" },
-      { href: "#", label: "Press kit" },
-      { href: "#", label: "Partners" },
+      { label: 'Restaurants', href: '/features#restaurants' },
+      { label: 'Bars & cocktails', href: '/features#bars' },
+      { label: 'Hotels', href: '/features#hotels' },
+      { label: 'Multi-location', href: '/features#groups' },
     ],
   },
   {
-    title: "Resources",
+    title: 'Company',
     links: [
-      { href: "#", label: "Docs" },
-      { href: "#", label: "API reference" },
-      { href: "#", label: "Changelog" },
-      { href: "#", label: "Status" },
+      { label: 'Contact', href: '/contact' },
+      { label: 'Careers', href: '/contact#careers' },
+      { label: 'Press', href: '/contact#press' },
+      { label: 'Changelog', href: '#' },
     ],
   },
   {
-    title: "Legal",
+    title: 'Legal',
     links: [
-      { href: "#", label: "Privacy" },
-      { href: "#", label: "Terms" },
-      { href: "#", label: "Security" },
-      { href: "#", label: "DPA" },
+      { label: 'Privacy', href: '#' },
+      { label: 'Terms', href: '#' },
+      { label: 'DPA', href: '#' },
+      { label: 'Security', href: '#' },
     ],
   },
 ];
 ---
-
-<footer class="relative mt-28 px-5 pb-12">
-  <div class="mx-auto max-w-7xl">
-    <div class="glass relative overflow-hidden rounded-[32px] p-8 md:p-12">
-      <div class="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-brand-500/30 blur-3xl"></div>
-      <div class="absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-accent-500/30 blur-3xl"></div>
-
-      <div class="grid gap-10 md:grid-cols-6">
-        <div class="md:col-span-2">
-          <Logo />
-          <p class="mt-4 max-w-xs text-sm text-[var(--text-muted)]">
-            Hospitality OS for bars, hotels and restaurants. Beautiful, fast, built for your floor.
-          </p>
-
-          <div class="mt-6 flex items-center gap-2">
-            {["twitter","linkedin","github","instagram"].map((s) => (
-              <a href="#" aria-label={s} class="grid h-9 w-9 place-items-center rounded-full glass transition-transform hover:-translate-y-0.5">
-                <span class="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-brand-500 to-accent-500"></span>
-              </a>
-            ))}
-          </div>
+<footer class="relative overflow-hidden">
+  <div class="seam-warm-top absolute inset-x-0 top-0 h-40"></div>
+  <div class="relative bg-paper-warm">
+    <div class="container-edge grid gap-16 py-22 lg:grid-cols-[1.2fr_3fr]">
+      <div>
+        <Logo />
+        <p class="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-ink-500">
+          The operating system for bars, hotels, and restaurants that treat hospitality
+          as a craft. Made, not generated.
+        </p>
+        <div class="mt-8 flex items-center gap-3">
+          <a href="#" aria-label="Twitter" class="inline-flex h-9 w-9 items-center justify-center border border-ink/15 transition-colors hover:border-ink hover:bg-ink hover:text-paper">
+            <svg class="h-4 w-4" viewBox="0 0 16 16" fill="currentColor"><path d="M12.7 1.5h2.3l-5 5.7 5.9 7.8H11.3L7.6 9.8 3.4 15h-2.3l5.3-6.1L.8 1.5h4.6l3.3 4.4 3.9-4.4Z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="inline-flex h-9 w-9 items-center justify-center border border-ink/15 transition-colors hover:border-ink hover:bg-ink hover:text-paper">
+            <svg class="h-4 w-4" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 2.5a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8ZM1.3 6h2.4v8H1.3V6Zm4 0h2.3v1.1h.04C7.94 6.4 8.9 5.8 10.2 5.8c2.5 0 3 1.7 3 3.9V14h-2.4V10c0-1 0-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.2V14H5.3V6Z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="inline-flex h-9 w-9 items-center justify-center border border-ink/15 transition-colors hover:border-ink hover:bg-ink hover:text-paper">
+            <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="3"/><circle cx="8" cy="8" r="2.7"/><circle cx="11.6" cy="4.4" r=".7" fill="currentColor"/></svg>
+          </a>
         </div>
+      </div>
 
-        {cols.map((col) => (
+      <div class="grid grid-cols-2 gap-10 sm:grid-cols-4">
+        {cols.map((c) => (
           <div>
-            <p class="mb-3 text-sm font-semibold">{col.title}</p>
-            <ul class="space-y-2 text-sm text-[var(--text-muted)]">
-              {col.links.map((l) => (
-                <li><a href={l.href} class="transition-colors hover:text-[var(--text)]">{l.label}</a></li>
+            <div class="eyebrow mb-5 text-ink-500">{c.title}</div>
+            <ul class="space-y-3">
+              {c.links.map((l) => (
+                <li><a href={l.href} class="text-sm text-ink-700 transition-colors hover:text-ink">{l.label}</a></li>
               ))}
             </ul>
           </div>
         ))}
       </div>
+    </div>
 
-      <div class="divider-gradient mt-10"></div>
-
-      <div class="mt-6 flex flex-col items-start justify-between gap-3 text-sm text-[var(--text-muted)] md:flex-row md:items-center">
-        <p>© {new Date().getFullYear()} Barista Labs. All rights reserved.</p>
-        <p>Crafted with care for hospitality teams worldwide.</p>
+    <div class="border-t border-ink/10">
+      <div class="container-edge flex flex-col items-start justify-between gap-4 py-8 text-xs text-ink-500 sm:flex-row sm:items-center">
+        <div class="flex items-center gap-2">
+          <span>© {new Date().getFullYear()} Maison Hospitality Systems</span>
+          <span class="hidden sm:inline">·</span>
+          <span class="hidden sm:inline">Crafted in Copenhagen & Singapore</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <span class="flex items-center gap-2">
+            <span class="relative inline-flex h-1.5 w-1.5">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-60"></span>
+              <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-600"></span>
+            </span>
+            All systems operational
+          </span>
+          <span>v4.2 · Artemis</span>
+        </div>
       </div>
     </div>
   </div>

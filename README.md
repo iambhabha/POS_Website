@@ -1,74 +1,109 @@
-# Barista — Hospitality SaaS Website
+# Maison
 
-Premium Astro site for a Bar, Hotel & Restaurant management platform. Glass UI, parallax,
-3D tilt cards, animated gradient backgrounds, and a full dashboard + admin experience.
+> The operating system for bars, hotels, and restaurants that treat hospitality as a craft.
+
+A premium SaaS product website built with **Astro + Tailwind + GSAP**. Seamless, editorial, handcrafted — not AI-generic.
+
+## Design philosophy
+
+- **Single continuous experience.** Gradient seams and overlapping surfaces instead of hard section cuts.
+- **Neutral + brass.** Warm paper/ink base with a single brass accent (`#B8935A`). No rainbow gradients.
+- **Sharp edges.** Border-radius mostly 0–3px. Hierarchy from borders + whitespace, not shadows.
+- **Editorial typography.** `Fraunces` for display (variable, optical sizing), `Inter` for body, `JetBrains Mono` for data.
+- **Subtle parallax.** GSAP ScrollTrigger, transform-only, respects `prefers-reduced-motion`.
+- **Reveal on scroll.** CSS-driven (`data-reveal`) + IntersectionObserver — no layout shift, no jank.
 
 ## Stack
 
-- [Astro 5](https://astro.build) with zero-JS by default
-- [Tailwind CSS 4](https://tailwindcss.com) via the `@tailwindcss/vite` plugin
-- Native `IntersectionObserver` scroll reveal + CSS parallax (no heavy libs)
-- GSAP + AOS are listed in `package.json` if you want to swap in richer timelines
+| Layer        | Tool                                    |
+| ------------ | --------------------------------------- |
+| Framework    | [Astro 4](https://astro.build) (SSG)    |
+| Styling      | Tailwind CSS 3 + custom design tokens   |
+| Motion       | GSAP 3 + ScrollTrigger                  |
+| Fonts        | Fontsource (self-hosted, variable)      |
+| Language     | TypeScript (strict)                     |
 
-## Run it
+## Getting started
 
 ```bash
 npm install
-npm run dev
-```
-
-Then open the URL Astro prints (usually `http://localhost:4321`).
-
-Build for production:
-
-```bash
-npm run build
+npm run dev         # http://localhost:4321
+npm run build       # static output in ./dist
 npm run preview
 ```
-
-## Pages
-
-| Route         | Description                                                         |
-|---------------|---------------------------------------------------------------------|
-| `/`           | Home — hero, floating mockup, feature grid, parallax showcase, CTA  |
-| `/features`   | Feature chapters, side-by-side comparison                           |
-| `/pricing`    | Plans with monthly/yearly toggle + FAQ                              |
-| `/download`   | Per-platform download grid + changelog                              |
-| `/contact`    | Sales form with animated gradient surface                           |
-| `/dashboard`  | User dashboard — stat cards, charts, orders table, reservations     |
-| `/admin`      | Admin panel — users table, activity feed, chart, modern chat UI     |
-
-## Theming
-
-Light/dark toggle lives in the navbar and every dashboard. Preference is stored in
-`localStorage` and applied before first paint via an inline `<script is:inline>` snippet
-to prevent flashes.
 
 ## Project structure
 
 ```
 src/
-  layouts/
-    BaseLayout.astro       # marketing pages shell (navbar + footer + animated bg)
-    DashboardLayout.astro  # sidebar + top bar shell for /dashboard and /admin
-  components/
-    Hero.astro, Navbar.astro, Footer.astro,
-    FeatureCard.astro, PricingCard (inline), DashboardMock.astro,
-    Sidebar.astro, StatCard.astro, LineChart.astro, DonutChart.astro, ChatUI.astro,
-    SectionHeading.astro, ThemeToggle.astro, Logo.astro
-  pages/
-    index.astro, features.astro, pricing.astro,
-    download.astro, contact.astro,
-    dashboard.astro, admin.astro
-  styles/global.css        # design tokens, glass, btn, reveal, keyframes
+├── components/          # 12 reusable Astro components
+│   ├── Navbar.astro     # Fixed, glass-on-scroll, mobile sheet
+│   ├── Hero.astro       # Aurora bg + floating product preview + parallax cards
+│   ├── Footer.astro     # 4-column site footer with status + version
+│   ├── Logo.astro
+│   ├── SectionHeading.astro
+│   ├── FeatureCard.astro
+│   ├── StatCard.astro   # Sparkline-capable KPI card
+│   ├── LineChart.astro  # Pure SVG, no chart library
+│   ├── DonutChart.astro # Pure SVG
+│   ├── ChatUI.astro     # Guest-messaging mock with Service AI
+│   ├── DashboardMock.astro
+│   ├── Sidebar.astro    # Dashboard nav (grouped)
+│   ├── ThemeToggle.astro
+│   ├── ParallaxLayer.astro
+│   └── Reveal.astro
+├── layouts/
+│   ├── BaseLayout.astro       # Marketing pages — GSAP + reveal bootstrap
+│   └── DashboardLayout.astro  # Product pages — Sidebar + top bar
+├── pages/
+│   ├── index.astro       # Home
+│   ├── features.astro    # 3 pillars × 4 modules
+│   ├── pricing.astro     # 3 plans + compare table + FAQ
+│   ├── download.astro    # 4 platforms + hardware
+│   ├── contact.astro     # Form + 3 offices + careers/press
+│   ├── dashboard.astro   # Live service view
+│   └── admin.astro       # Team, permissions, audit log, billing
+└── styles/
+    └── global.css        # Design tokens, utilities, reveal system
 ```
 
-## Motion
+## Design tokens
 
-- `.reveal` — fades + slides up when in viewport (one-shot)
-- `.card-3d` — perspective tilt toward cursor
-- `[data-parallax]` — translates on scroll (value = speed, e.g. `0.2`)
-- `.float-y` / `.float-y-slow` — gentle bobbing for hero decor
-- `.animate-gradient` — slow gradient shift used on headings and the CTA band
+Declared in `src/styles/global.css` under `:root` (light) and `.dark` (dark). Exposed to Tailwind via `tailwind.config.mjs`:
 
-All of it respects `prefers-reduced-motion`.
+- **Colors** — `ink`, `paper`, `paper-warm`, `paper-cream`, `bone`, `brass.*`
+- **Typography** — `font-display` (Fraunces var), `font-sans` (Inter var), `font-mono` (JetBrains)
+- **Motion** — `--ease-out-expo`, `--ease-smooth`
+- **Seams** — `.seam-warm-top`, `.seam-warm-bottom`, `.hero-aurora`, `.grain`
+
+## Motion system
+
+| Pattern       | How                                                          |
+| ------------- | ------------------------------------------------------------ |
+| Reveal on scroll | `<Reveal mode="up\|scale\|left\|right" delay={n}>` → IO toggle |
+| Parallax      | `<ParallaxLayer speed={-0.2..0.2}>` → GSAP ScrollTrigger     |
+| Hero float    | `.animate-float` / `.animate-float-slow`                     |
+| Hover lift    | `-translate-y-1` + brass underline reveal                    |
+| Reduced motion | All of the above no-op via `@media (prefers-reduced-motion)` |
+
+## Accessibility
+
+- WCAG AA contrast on body text (`ink` ≥ 11:1 on `paper`)
+- Focus rings: 2px brass, 2px offset
+- Skip-link on every page
+- Semantic `<nav>`, `<main>`, `<footer>`, `<article>`
+- All icons are SVG (not emoji), all icon-only controls have `aria-label`
+- Respect `prefers-reduced-motion` and `prefers-color-scheme`
+- Keyboard-navigable, tab order matches visual order
+
+## Adding a page
+
+1. Create `src/pages/your-page.astro`
+2. Wrap in `<BaseLayout title="..." current="your-page">`
+3. Compose with `<SectionHeading>`, `<FeatureCard>`, `<Reveal>`, `<ParallaxLayer>` from `src/components/`
+
+Keep sections seamed — use `.seam-warm-top / .seam-warm-bottom` or gradient overlays between alternating `bg-paper` and `bg-paper-warm/50` backgrounds.
+
+## License
+
+© Maison Hospitality Systems — all rights reserved.

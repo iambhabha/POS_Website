@@ -2,14 +2,38 @@
 interface Props {
   eyebrow?: string;
   title: string;
-  subtitle?: string;
-  align?: "left" | "center";
+  lead?: string;
+  align?: 'left' | 'center';
+  highlight?: string;  // substring inside title to brass-underline
+  class?: string;
 }
-const { eyebrow, title, subtitle, align = "center" } = Astro.props;
-const alignClass = align === "center" ? "text-center mx-auto" : "text-left";
+const { eyebrow, title, lead, align = 'left', highlight, class: className = '' } = Astro.props;
+
+let before = title, match = '', after = '';
+if (highlight && title.includes(highlight)) {
+  const idx = title.indexOf(highlight);
+  before = title.slice(0, idx);
+  match = highlight;
+  after = title.slice(idx + highlight.length);
+}
 ---
-<div class={`max-w-3xl ${alignClass}`}>
-  {eyebrow && <span class="chip mb-4"><span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>{eyebrow}</span>}
-  <h2 class="text-3xl font-semibold tracking-tight md:text-5xl" set:html={title} />
-  {subtitle && <p class="mt-4 text-base text-[var(--text-muted)] md:text-lg">{subtitle}</p>}
+<div class={`max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
+  {eyebrow && (
+    <div data-reveal class="eyebrow mb-5 flex items-center gap-3 text-ink-500">
+      <span class="inline-block h-px w-8 bg-ink-400"></span>
+      {eyebrow}
+    </div>
+  )}
+  <h2 data-reveal class="font-display text-4xl leading-[1.04] tracking-tightest text-ink sm:text-5xl lg:text-[3.75rem]">
+    {highlight ? (
+      <Fragment>
+        {before}<em class="not-italic"><span class="underline-brass">{match}</span></em>{after}
+      </Fragment>
+    ) : title}
+  </h2>
+  {lead && (
+    <p data-reveal style="transition-delay:120ms" class="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-ink-500">
+      {lead}
+    </p>
+  )}
 </div>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  speed?: number;  // -1 to 1, negative = opposite direction
+  class?: string;
+  as?: string;
+}
+const { speed = 0.2, class: className = '', as: Tag = 'div' } = Astro.props;
+---
+<Tag data-parallax data-speed={speed} class={className}>
+  <slot />
+</Tag>

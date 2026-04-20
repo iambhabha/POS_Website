@@ -1,165 +1,231 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import SectionHeading from "../components/SectionHeading.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Reveal from '../components/Reveal.astro';
 
 const plans = [
   {
-    name: "Starter",
-    price: { m: 39, y: 31 },
-    tagline: "For neighbourhood cafés & wine bars.",
+    name: 'Atelier',
+    subtitle: 'Single venue — bar or restaurant',
+    price: '€129',
+    period: 'per terminal / month',
+    meta: '1 venue · unlimited staff · 2 terminals included',
     features: [
-      "1 venue, up to 3 terminals",
-      "POS + reservations",
-      "Inventory basics",
-      "Email support",
+      'POS, reservations, inventory',
+      'Guest memory (basic)',
+      'Morning read (weekly)',
+      'Standard integrations',
+      'Email support, 24h',
     ],
+    cta: 'Start trial',
+    href: '/download',
+    tone: 'paper',
     highlight: false,
   },
   {
-    name: "Growth",
-    price: { m: 99, y: 79 },
-    tagline: "For restaurants, bars & busy venues.",
+    name: 'Maison',
+    subtitle: 'Multi-venue or hotel',
+    price: '€289',
+    period: 'per terminal / month',
+    meta: 'Up to 4 venues · PMS-ready · unlimited terminals',
     features: [
-      "Up to 3 venues, unlimited terminals",
-      "Kitchen display + prep routing",
-      "Advanced inventory & pours",
-      "Analytics workspace",
-      "Priority support",
+      'Everything in Atelier',
+      'Rooms + F&B + events on one folio',
+      'Service AI (real-time)',
+      'Multi-venue purchasing & labour',
+      'Daily morning read + written analysis',
+      'Priority support, 4h',
+      'Dedicated migration engineer',
     ],
+    cta: 'Book walkthrough',
+    href: '/contact',
+    tone: 'ink',
     highlight: true,
   },
   {
-    name: "Hotel",
-    price: { m: 249, y: 199 },
-    tagline: "Boutique hotels & multi-venue groups.",
+    name: 'Atelier Group',
+    subtitle: 'Groups, chains, luxury portfolios',
+    price: 'Bespoke',
+    period: 'annual agreement',
+    meta: '5+ venues · SSO · data residency · custom SLA',
     features: [
-      "Full PMS + channel manager",
-      "Housekeeping & folios",
-      "Unlimited venues & properties",
-      "Dedicated CSM",
-      "99.99% SLA",
+      'Everything in Maison',
+      'Custom roles & approval flows',
+      'Regional data residency (EU / APAC)',
+      'White-glove onboarding per venue',
+      'Quarterly business review',
+      '24/7 on-call engineer',
     ],
+    cta: 'Contact sales',
+    href: '/contact',
+    tone: 'paper',
     highlight: false,
   },
 ];
 
 const faqs = [
-  { q: "Is there a free trial?", a: "Yes — 21 days, no credit card required. You’ll keep access to your data even if you don’t convert." },
-  { q: "Do you charge per terminal?", a: "No. Plans are per venue with unlimited terminals and staff accounts on Growth and Hotel." },
-  { q: "Can I switch plans later?", a: "Any time. Upgrades are prorated to the day, downgrades take effect at the next cycle." },
-  { q: "What about hardware?", a: "Barista runs on iPad, Android, web and our optional Barista Terminal. Bring your own or lease from us." },
+  { q: 'Is there a setup fee?', a: 'No. Migration, data import, and staff training are included with every plan. We charge for hardware at cost.' },
+  { q: 'Can I switch plans later?', a: 'Yes. You can move up or down monthly — prorated automatically. Multi-venue Maison plans can also add or remove properties in-month.' },
+  { q: 'Do you integrate with my PMS / accounting system?', a: 'Yes — Mews, Cloudbeds, Opera Cloud, Xero, QuickBooks, DATEV, and more. If yours isn\'t listed, we\'ll build it during migration.' },
+  { q: 'What about hardware?', a: 'We ship our own certified terminals, printers, KDS displays, and card readers — or you can bring your own. Either works.' },
+  { q: 'Where is my data?', a: 'EU-West by default (Frankfurt), with APAC and US options on Maison and Atelier Group. All encrypted at rest and in transit.' },
 ];
 ---
+<BaseLayout title="Pricing — Maison" current="pricing">
 
-<BaseLayout title="Pricing — Barista">
-  <section class="relative px-5 pt-20">
-    <div class="mx-auto max-w-5xl text-center">
-      <span class="chip reveal">Pricing</span>
-      <h1 class="reveal mt-4 text-5xl font-semibold tracking-tight md:text-7xl" style="transition-delay:80ms;">
-        Simple pricing.
-        <span class="gradient-text animate-gradient">Serious hospitality.</span>
-      </h1>
-      <p class="reveal mx-auto mt-6 max-w-xl text-[var(--text-muted)] md:text-lg" style="transition-delay:160ms;">
-        Start free for 21 days on any plan. Switch or cancel whenever. Pricing below is per venue.
-      </p>
+  <!-- Hero -->
+  <section class="relative overflow-hidden pb-20 pt-36 sm:pt-44">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-60"></div>
 
-      <div class="reveal mt-8 inline-flex items-center gap-1 rounded-full glass p-1" style="transition-delay:240ms;">
-        <button data-billing="m" class="billing-btn is-active relative rounded-full px-4 py-1.5 text-sm font-medium text-white transition">
-          <span class="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500"></span>
-          Monthly
-        </button>
-        <button data-billing="y" class="billing-btn relative rounded-full px-4 py-1.5 text-sm font-medium text-[var(--text-muted)] transition">
-          Yearly · save 20%
-        </button>
+    <div class="container-edge">
+      <div class="max-w-3xl">
+        <Reveal class="eyebrow mb-6 flex items-center gap-3 text-ink-500">
+          <span class="h-px w-8 bg-ink-400"></span>Pricing
+        </Reveal>
+        <Reveal>
+          <h1 class="font-display text-5xl leading-[1.02] tracking-tightest text-ink sm:text-7xl">
+            Priced like <em class="not-italic"><span class="underline-brass">hardware</span></em>.<br/>
+            <span class="text-ink-500">Not like SaaS.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={120}>
+          <p class="mt-8 max-w-xl text-lg text-ink-500">
+            Per-terminal, not per-seat. Predictable, reasonable, and never punished for growing.
+          </p>
+        </Reveal>
       </div>
     </div>
   </section>
 
-  <section class="relative px-5 py-16">
-    <div class="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
-      {plans.map((p, i) => (
-        <article
-          class:list={[
-            "reveal relative overflow-hidden rounded-3xl p-7",
-            p.highlight ? "glass-strong ring-2 ring-brand-500/50 shadow-2xl scale-[1.01]" : "glass",
-          ]}
-          style={`transition-delay:${i*90}ms`}
-        >
-          {p.highlight && (
-            <span class="absolute right-5 top-5 rounded-full bg-gradient-to-r from-accent-500 to-brand-500 px-3 py-1 text-[11px] font-semibold text-white shadow-lg">Most popular</span>
-          )}
-          <p class="text-sm font-semibold tracking-wide">{p.name}</p>
-          <p class="mt-1 text-sm text-[var(--text-muted)]">{p.tagline}</p>
-          <div class="mt-6 flex items-end gap-1">
-            <span class="text-xs text-[var(--text-muted)]">$</span>
-            <span class="price text-5xl font-semibold tracking-tight" data-m={p.price.m} data-y={p.price.y}>{p.price.m}</span>
-            <span class="mb-1 text-sm text-[var(--text-muted)]">/venue/mo</span>
+  <!-- Plans -->
+  <section class="relative pb-24 sm:pb-32">
+    <div class="container-edge">
+      <div class="grid gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-3">
+        {plans.map((p, i) => {
+          const dark = p.tone === 'ink';
+          return (
+            <Reveal delay={i * 100}>
+              <div class={`relative h-full p-10 ${dark ? 'bg-ink text-paper' : 'bg-paper text-ink'}`}>
+                {p.highlight && (
+                  <span class="absolute left-10 top-6 mono text-[0.65rem] tracking-[0.2em] text-brass-300">
+                    ● MOST CHOSEN
+                  </span>
+                )}
+                <div class="mt-4">
+                  <div class={`eyebrow ${dark ? 'text-paper/50' : 'text-ink-500'}`}>{p.subtitle}</div>
+                  <h3 class="mt-3 font-display text-4xl tracking-tightest">{p.name}</h3>
+                </div>
+
+                <div class="mt-8 flex items-baseline gap-2">
+                  <span class="num text-5xl leading-none tracking-tightest">{p.price}</span>
+                  <span class={`text-sm ${dark ? 'text-paper/60' : 'text-ink-500'}`}>/ {p.period}</span>
+                </div>
+                <div class={`mono mt-3 text-[0.68rem] tracking-wide ${dark ? 'text-paper/50' : 'text-ink-400'}`}>
+                  {p.meta}
+                </div>
+
+                <a href={p.href} class={`mt-8 inline-flex w-full items-center justify-center px-5 py-3 text-sm font-medium transition-colors
+                  ${dark ? 'bg-brass-500 text-ink-950 hover:bg-brass-400' : 'bg-ink text-paper hover:bg-ink-800'}`}>
+                  {p.cta}
+                </a>
+
+                <ul class={`mt-10 space-y-3 border-t pt-6 text-sm ${dark ? 'border-paper/15 text-paper/80' : 'border-ink/10 text-ink-700'}`}>
+                  {p.features.map((f) => (
+                    <li class="flex gap-3">
+                      <svg class={`mt-0.5 h-4 w-4 shrink-0 ${dark ? 'text-brass-300' : 'text-brass-600'}`} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+                        <path d="M3 8l3.5 3.5L13 5" stroke-linecap="square"/>
+                      </svg>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          );
+        })}
+      </div>
+
+      <Reveal class="mt-10 flex flex-wrap items-center justify-between gap-4 border border-ink/10 bg-paper-warm/50 p-6">
+        <div class="flex items-center gap-4">
+          <span class="flex h-9 w-9 items-center justify-center bg-ink text-paper">%</span>
+          <div>
+            <div class="text-sm text-ink">20% off for annual billing</div>
+            <div class="text-[0.8rem] text-ink-500">Applied automatically at checkout. No small print.</div>
           </div>
-          <a href="/download" class:list={["mt-6 block text-center", p.highlight ? "btn-primary pulse-glow" : "btn-ghost"]}>Start free trial</a>
-          <ul class="mt-6 space-y-3 text-sm">
-            {p.features.map((f) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white">
-                  <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                {f}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+        </div>
+        <a href="/contact" class="btn-ghost">Talk to sales →</a>
+      </Reveal>
     </div>
   </section>
 
-  <section class="relative px-5 py-16">
-    <div class="mx-auto max-w-4xl">
-      <SectionHeading eyebrow="FAQ" title="Questions, answered." />
-      <div class="mt-10 divide-y divide-white/10 rounded-3xl glass">
-        {faqs.map((f, i) => (
-          <details class="group p-5 [&_summary::-webkit-details-marker]:hidden">
-            <summary class="flex cursor-pointer items-center justify-between text-base font-medium">
-              {f.q}
-              <span class="grid h-7 w-7 place-items-center rounded-full glass transition-transform group-open:rotate-45">
-                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-              </span>
-            </summary>
-            <p class="mt-3 text-sm text-[var(--text-muted)]">{f.a}</p>
-          </details>
-        ))}
+  <!-- Compare table -->
+  <section class="relative overflow-hidden bg-paper-warm/60 py-24">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent"></div>
+
+    <div class="container-edge relative">
+      <SectionHeading eyebrow="Compare" title="Every plan, side by side." />
+
+      <div class="mt-12 overflow-x-auto border border-ink/10 bg-paper">
+        <table class="w-full min-w-[720px] text-sm">
+          <thead>
+            <tr class="border-b border-ink/10 text-left">
+              <th class="px-6 py-5 font-normal text-ink-500">Capability</th>
+              <th class="px-6 py-5 font-display text-lg tracking-tight text-ink">Atelier</th>
+              <th class="px-6 py-5 font-display text-lg tracking-tight text-ink">Maison</th>
+              <th class="px-6 py-5 font-display text-lg tracking-tight text-ink">Atelier Group</th>
+            </tr>
+          </thead>
+          <tbody class="[&_td]:px-6 [&_td]:py-4 [&_tr]:border-t [&_tr]:border-ink/5">
+            {[
+              ['Unlimited staff', '✓','✓','✓'],
+              ['Reservations + guest memory', 'Basic','Full','Full + custom'],
+              ['Rooms (PMS)', '—','✓','✓'],
+              ['Service AI', '—','Real-time','Real-time + custom'],
+              ['Multi-venue purchasing', '—','Up to 4','Unlimited'],
+              ['SSO / SAML', '—','—','✓'],
+              ['Data residency (EU/APAC/US)', 'EU','EU + APAC','Global'],
+              ['Support SLA', '24h','4h','1h · 24/7'],
+            ].map(([label, a, b, c]) => (
+              <tr>
+                <td class="text-ink-700">{label}</td>
+                <td class="mono text-ink-500">{a}</td>
+                <td class="mono text-ink">{b}</td>
+                <td class="mono text-ink-500">{c}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
-</BaseLayout>
 
-<script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>(".billing-btn");
-  const prices = document.querySelectorAll<HTMLElement>(".price");
-  function setBilling(mode: "m" | "y") {
-    prices.forEach((p) => {
-      const v = p.dataset[mode];
-      if (v) {
-        p.classList.add("opacity-0", "translate-y-2");
-        setTimeout(() => {
-          p.textContent = v;
-          p.classList.remove("opacity-0", "translate-y-2");
-        }, 140);
-      }
-    });
-    buttons.forEach((b) => {
-      const active = b.dataset.billing === mode;
-      b.classList.toggle("is-active", active);
-      b.classList.toggle("text-white", active);
-      b.classList.toggle("text-[var(--text-muted)]", !active);
-      const existing = b.querySelector("span.absolute");
-      if (active && !existing) {
-        const span = document.createElement("span");
-        span.className = "absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500";
-        b.prepend(span);
-      } else if (!active && existing) {
-        existing.remove();
-      }
-    });
-  }
-  prices.forEach((p) => (p.style.transition = "opacity .25s ease, transform .25s ease"));
-  buttons.forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing as "m" | "y")));
-</script>
+  <!-- FAQ -->
+  <section class="relative py-24">
+    <div class="container-edge">
+      <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div class="lg:sticky lg:top-32 lg:self-start">
+          <SectionHeading eyebrow="Questions" title="Answers, without the small print." highlight="Answers" />
+          <Reveal class="mt-8">
+            <a href="/contact" class="btn-ghost">Ask something else →</a>
+          </Reveal>
+        </div>
+
+        <div class="divide-y divide-hairline border-y border-ink/10">
+          {faqs.map((f, i) => (
+            <details class="group py-6" open={i === 0}>
+              <summary class="flex cursor-pointer items-center justify-between gap-6 text-lg text-ink">
+                <span class="font-display tracking-tight">{f.q}</span>
+                <svg class="h-4 w-4 shrink-0 text-ink-400 transition-transform duration-300 group-open:rotate-45" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M8 2v12M2 8h12" stroke-linecap="square"/>
+                </svg>
+              </summary>
+              <p class="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-ink-500">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

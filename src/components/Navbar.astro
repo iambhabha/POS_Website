@@ -1,74 +1,97 @@
 ---
-import Logo from "./Logo.astro";
-import ThemeToggle from "./ThemeToggle.astro";
+import Logo from './Logo.astro';
 
-const nav = [
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/download", label: "Download" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/admin", label: "Admin" },
-  { href: "/contact", label: "Contact" },
+interface Props {
+  current?: string;
+}
+const { current = '' } = Astro.props;
+
+const links = [
+  { href: '/features', label: 'Features' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/admin', label: 'Admin' },
+  { href: '/contact', label: 'Contact' },
 ];
-
-const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
+<header
+  data-nav
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out"
+>
+  <div class="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 ease-out [header[data-nav-scrolled]_&]:opacity-100"
+       style="background: linear-gradient(to bottom, rgb(var(--paper) / 0.92), rgb(var(--paper) / 0.72));
+              backdrop-filter: blur(14px) saturate(1.1);
+              -webkit-backdrop-filter: blur(14px) saturate(1.1);
+              border-bottom: 1px solid rgb(var(--hairline));"></div>
 
-<header class="sticky top-0 z-50 w-full">
-  <div class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/60 dark:from-black/40 to-transparent blur-sm"></div>
-  <div class="relative mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-5 py-3.5">
-    <div class="glass flex w-full items-center justify-between rounded-full px-4 py-2 shadow-sm">
-      <Logo />
+  <nav class="container-edge flex h-18 items-center justify-between">
+    <Logo />
 
-      <nav class="hidden items-center gap-1 md:flex">
-        {nav.map((item) => {
-          const active = pathname === item.href;
-          return (
-            <a
-              href={item.href}
-              class:list={[
-                "relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
-                active ? "text-white" : "hover:text-brand-600 dark:hover:text-brand-300",
-              ]}
-            >
-              {active && (
-                <span class="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-brand-500 to-accent-500 shadow-[0_6px_20px_-8px_rgba(59,91,255,0.6)]"></span>
-              )}
-              {item.label}
-            </a>
-          );
-        })}
-      </nav>
-
-      <div class="flex items-center gap-2">
-        <ThemeToggle />
-        <a href="/download" class="hidden btn-primary !py-2 !px-4 text-sm sm:inline-flex">Get Barista</a>
-        <button
-          id="mobile-nav-btn"
-          aria-label="Open menu"
-          class="grid h-10 w-10 place-items-center rounded-full glass md:hidden"
+    <div class="hidden items-center gap-1 lg:flex">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class={`relative px-3.5 py-2 text-sm tracking-tight transition-colors duration-300
+                  ${current === l.label.toLowerCase() ? 'text-ink' : 'text-ink-500 hover:text-ink'}`}
         >
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        </button>
-      </div>
+          {l.label}
+          {current === l.label.toLowerCase() && (
+            <span class="absolute inset-x-3.5 bottom-1 h-px bg-brass-500"></span>
+          )}
+        </a>
+      ))}
     </div>
-  </div>
 
-  <div id="mobile-nav" class="hidden md:hidden">
-    <div class="mx-auto max-w-7xl px-5 pb-3">
-      <div class="glass rounded-3xl p-3">
-        {nav.map((item) => (
-          <a href={item.href} class="block rounded-2xl px-4 py-2.5 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5">{item.label}</a>
-        ))}
-      </div>
+    <div class="flex items-center gap-2">
+      <a href="/dashboard" class="hidden text-sm text-ink-500 hover:text-ink transition-colors sm:inline-flex items-center gap-1.5 px-3 py-2">
+        Sign in
+      </a>
+      <a href="/download" class="btn-primary">
+        <span>Get Maison</span>
+        <svg class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="square"/>
+        </svg>
+      </a>
+      <button
+        id="nav-toggle"
+        class="inline-flex h-10 w-10 items-center justify-center border border-ink/15 lg:hidden"
+        aria-label="Open menu"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="square"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile sheet -->
+  <div id="nav-sheet" class="lg:hidden hidden border-t border-ink/10 bg-paper/95 backdrop-blur-xl">
+    <div class="container-edge grid gap-1 py-6">
+      {links.map((l) => (
+        <a href={l.href} class="flex items-center justify-between border-b border-ink/5 py-3 text-lg tracking-tight text-ink">
+          {l.label}
+          <svg class="h-4 w-4 text-ink-400" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l5 5-5 5" stroke-linecap="square"/></svg>
+        </a>
+      ))}
     </div>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById("mobile-nav-btn");
-  const menu = document.getElementById("mobile-nav");
-  btn?.addEventListener("click", () => menu?.classList.toggle("hidden"));
+  const nav = document.querySelector('[data-nav]');
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 8) nav.setAttribute('data-nav-scrolled', '');
+    else nav.removeAttribute('data-nav-scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const toggle = document.getElementById('nav-toggle');
+  const sheet = document.getElementById('nav-sheet');
+  toggle?.addEventListener('click', () => sheet?.classList.toggle('hidden'));
 </script>
+
+<style>
+  header[data-nav-scrolled] nav { height: 4rem; }
+</style>

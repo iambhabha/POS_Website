@@ -1,137 +1,218 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import FeatureCard from "../components/FeatureCard.astro";
-import SectionHeading from "../components/SectionHeading.astro";
-import DashboardMock from "../components/DashboardMock.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import DashboardMock from '../components/DashboardMock.astro';
+import ChatUI from '../components/ChatUI.astro';
+import ParallaxLayer from '../components/ParallaxLayer.astro';
+import Reveal from '../components/Reveal.astro';
 
 const features = [
-  { title: "Lightning POS", description: "Take orders, split checks and close tables in a few taps. Works offline, syncs instantly.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='3'/><path d='M3 9h18M9 3v18'/></svg>", gradient: "from-brand-500 to-brand-700" },
-  { title: "Reservations", description: "Floor-plan based booking with automated reminders and deposit capture. No more no-shows.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='3'/><path d='M16 2v4M8 2v4M3 10h18'/></svg>", gradient: "from-accent-500 to-accent-600" },
-  { title: "Rooms & Stays", description: "PMS built for boutique hotels. Channel manager, housekeeping and folios in one place.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12l9-8 9 8'/><path d='M5 10v10h14V10'/></svg>", gradient: "from-mint-400 to-mint-500" },
-  { title: "Inventory & Pours", description: "Track every bottle, keg and ingredient. Weight-based pour control at the bar.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 2h8l-1 5a4 4 0 0 1-6 0l-1-5z'/><path d='M12 11v11'/></svg>", gradient: "from-amber-400 to-rose-500" },
-  { title: "Insights", description: "Real-time sales, covers and labor analytics. Forecast demand before it hits your door.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 3v18h18'/><path d='M7 15l4-4 4 2 5-6'/></svg>", gradient: "from-brand-400 to-mint-500" },
-  { title: "Team & Payroll", description: "Rostering, tips distribution and time-clocks that respect your margins and your crew.", icon: "<svg viewBox='0 0 24 24' class='h-5 w-5' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='9' cy='8' r='4'/><path d='M2 21c0-4 3-7 7-7s7 3 7 7M17 10a4 4 0 0 0 0-8M22 21c0-3-2-5-5-6'/></svg>", gradient: "from-purple-400 to-brand-500" },
+  { index: '01', title: 'POS that understands service',    body: 'Sub-second splits, tabs that follow guests between bar and table, and a bill that reads like a menu — because it is one.', icon: 'pos' },
+  { index: '02', title: 'Reservations with memory',        body: 'Every guest carries their preferences, allergies, and stories with them. Your team walks into each shift already knowing the room.', icon: 'calendar' },
+  { index: '03', title: 'Inventory that forecasts',        body: 'Par-levels tuned per day-of-week and weather. The bar never runs out of Chablis on a Friday again.', icon: 'inventory' },
+  { index: '04', title: 'One roster, three properties',    body: 'Schedule across hotel, bar, and restaurant with role-based costing, tips, and labour compliance built in.', icon: 'staff' },
+  { index: '05', title: 'Rooms, F&B, events — one folio',  body: 'A single bill for the room, the minibar, the tasting menu, and the anniversary cake. No reconciliation at midnight.', icon: 'rooms' },
+  { index: '06', title: 'Insight without dashboards',      body: 'A short, written read on last night — what worked, what didn\'t, what to change by tomorrow. Delivered at 7:00.', icon: 'insights' },
+];
+
+const testimonials = [
+  { quote: 'Maison is the first system that didn\'t feel like software. It feels like a good maître d\'.', author: 'Ines Moreau', role: 'Head of hospitality, Kenzo Group', venue: '3 properties · Paris' },
+  { quote: 'We cut our reconciliation work from 9 hours a week to under 30 minutes. That\'s another full shift of service.', author: 'Matteo Rinaldi', role: 'GM, Aurum Bar', venue: 'Cocktail bar · Milan' },
+  { quote: 'Guests notice things they can\'t quite name. The quiet between courses. The way their second table is free. That\'s Maison in the background.', author: 'Jun Watanabe', role: 'Chef-owner, Hotel Kōya', venue: 'Boutique hotel · Kyoto' },
 ];
 ---
 
-<BaseLayout title="Barista — Hospitality OS for bars, hotels & restaurants">
+<BaseLayout title="Maison — Hospitality, run with the grain of craft" current="">
+
   <Hero />
 
-  <!-- Features grid -->
-  <section class="relative px-5 py-28">
-    <div class="mx-auto max-w-7xl">
-      <SectionHeading
-        eyebrow="One platform"
-        title="Everything your venue runs on, <span class='gradient-text'>beautifully unified.</span>"
-        subtitle="From the front door to the last pour, Barista replaces the tangle of apps your team is stuck with today."
-      />
+  <!-- ===================== FEATURES TEASER ===================== -->
+  <section class="relative py-24 sm:py-32">
+    <div class="container-edge">
+      <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div class="lg:sticky lg:top-32 lg:self-start">
+          <SectionHeading
+            eyebrow="What it is"
+            title="One system. Every service. No seams."
+            highlight="seams"
+            lead="Maison unifies point-of-sale, reservations, rooms, inventory, and guest memory so your team spends less time tabbing between apps — and more time on the floor."
+          />
+          <Reveal class="mt-10 flex flex-wrap gap-3">
+            <a href="/features" class="btn-primary">Explore features</a>
+            <a href="/dashboard" class="btn-ghost">See a live shift</a>
+          </Reveal>
+        </div>
 
-      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map((f, i) => <FeatureCard {...f} delay={i * 60} />)}
-      </div>
-    </div>
-  </section>
-
-  <!-- Parallax product showcase -->
-  <section class="relative overflow-hidden px-5 py-24">
-    <div class="pointer-events-none absolute inset-0 -z-10">
-      <div data-parallax="0.2" class="absolute left-[10%] top-20 text-[22rem] font-bold leading-none text-white/5 dark:text-white/5 select-none">/ flow</div>
-    </div>
-    <div class="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-      <div class="reveal">
-        <span class="chip"><span class="h-1.5 w-1.5 rounded-full bg-mint-400"></span>Service-first</span>
-        <h2 class="mt-4 text-4xl font-semibold md:text-5xl">From seat to settle in
-          <span class="gradient-text">under 12 seconds.</span>
-        </h2>
-        <p class="mt-4 max-w-lg text-[var(--text-muted)]">A tactile POS designed for muscle memory. Built-in AI prep routing keeps the kitchen & bar in sync, so every guest feels personally hosted.</p>
-        <ul class="mt-6 space-y-3 text-sm">
-          {[
-            "Haptic quick-actions for the busiest sections",
-            "Multi-venue menu sync with seasonal rules",
-            "Smart tabs that follow guests from bar to table",
-          ].map((t) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-accent-500 text-white">
-                <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-              </span>
-              {t}
-            </li>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {features.map((f, i) => (
+            <FeatureCard index={f.index} title={f.title} body={f.body} icon={f.icon as any}
+                         tone={i === 0 ? 'ink' : i === 3 ? 'warm' : 'paper'} />
           ))}
-        </ul>
-      </div>
-      <div class="relative reveal" style="transition-delay:120ms;">
-        <div data-parallax="0.08" class="card-3d mx-auto">
-          <DashboardMock />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats band -->
-  <section class="relative px-5 py-20">
-    <div class="mx-auto max-w-7xl glass rounded-[32px] p-10 md:p-14 overflow-hidden relative">
-      <div class="absolute -top-20 left-1/2 h-60 w-[80%] -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-500/30 via-accent-500/30 to-mint-500/30 blur-3xl"></div>
-      <div class="grid gap-8 md:grid-cols-4">
-        {[
-          { k: "99.99%", v: "Service uptime — across 48 regions" },
-          { k: "3.2s", v: "Average order-to-kitchen routing" },
-          { k: "$2.4B", v: "Processed annually through Barista" },
-          { k: "12k+", v: "Venues choosing Barista in 42 countries" },
-        ].map((s, i) => (
-          <div class="reveal" style={`transition-delay:${i*80}ms`}>
-            <p class="text-4xl font-semibold gradient-text md:text-5xl">{s.k}</p>
-            <p class="mt-2 text-sm text-[var(--text-muted)]">{s.v}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- ===================== LIVE DASHBOARD ===================== -->
+  <section class="relative overflow-hidden py-24 sm:py-32">
+    <ParallaxLayer speed={-0.1} class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute left-1/2 top-0 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-paper-cream/60 blur-3xl"></div>
+    </ParallaxLayer>
 
-  <!-- Testimonials -->
-  <section class="relative px-5 py-24">
-    <div class="mx-auto max-w-7xl">
+    <div class="container-edge">
       <SectionHeading
-        eyebrow="Why teams switch"
-        title="Operators, owners & maître d’s — all speak <span class='gradient-text'>Barista.</span>"
+        eyebrow="Service mode"
+        title="See the room the way your best manager does."
+        align="center"
+        lead="A calm, live view of the night — revenue, covers, stations, stock — with the detail you need and none of the noise you don't."
       />
-      <div class="mt-12 grid gap-5 md:grid-cols-3">
+      <Reveal mode="scale" class="mt-16">
+        <DashboardMock />
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ===================== BRIDGE / QUOTE ===================== -->
+  <section class="relative py-24">
+    <div class="container-edge">
+      <Reveal>
+        <blockquote class="mx-auto max-w-4xl text-balance text-center font-display text-[2.25rem] leading-[1.12] tracking-tightest text-ink sm:text-[3rem]">
+          <span class="text-brass-500">"</span>Software should <em class="not-italic">disappear</em> into
+          the rhythm of a night — and <em class="not-italic">appear</em> only when it's useful.<span class="text-brass-500">"</span>
+        </blockquote>
+        <div class="mt-8 flex items-center justify-center gap-4 text-sm text-ink-500">
+          <span class="h-px w-8 bg-ink-300"></span>
+          <span>Ines Moreau · Kenzo Group</span>
+          <span class="h-px w-8 bg-ink-300"></span>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ===================== CHAT / GUEST MEMORY ===================== -->
+  <section class="relative overflow-hidden bg-paper-warm/60 py-24 sm:py-32">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper to-transparent"></div>
+
+    <div class="container-edge relative grid items-center gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      <div>
+        <SectionHeading
+          eyebrow="Guest memory"
+          title="Hospitality starts with remembering."
+          highlight="remembering"
+          lead="Every visit, preference, allergy, and story flows with the guest — from reception to bar to table — and lands, quietly, in front of the right staff member at the right moment."
+        />
+        <Reveal class="mt-10 grid grid-cols-2 gap-6 text-sm">
+          <div>
+            <div class="num text-3xl text-ink">14 visits</div>
+            <div class="mt-1 text-ink-500">Clara knows what she wants. Now so do you.</div>
+          </div>
+          <div>
+            <div class="num text-3xl text-ink">0 ms</div>
+            <div class="mt-1 text-ink-500">Service AI reacts in the margins, never in the way.</div>
+          </div>
+        </Reveal>
+        <Reveal class="mt-10">
+          <a href="/features" class="btn-ghost">How memory works →</a>
+        </Reveal>
+      </div>
+
+      <Reveal mode="right">
+        <ChatUI />
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- ===================== VENUES ===================== -->
+  <section class="relative py-24 sm:py-32">
+    <div class="container-edge">
+      <SectionHeading eyebrow="Venues" title="One platform, every kind of room." align="center" />
+
+      <div class="mt-14 grid gap-px overflow-hidden border border-ink/10 bg-ink/10 md:grid-cols-3">
         {[
-          { q: "Barista replaced four tools in our stack and paid for itself in five weeks. The UI alone made our team happier.", a: "Mireille L.", r: "GM, Aurora Hotel Group" },
-          { q: "Our bar uses it nightly for 800+ covers. Nothing else is this fast and this gorgeous.", a: "Tomás R.", r: "Bar Director, Mirage" },
-          { q: "From reservation to folio-out, the guest journey feels handcrafted. Our NPS jumped 22 points.", a: "Aarav P.", r: "Founder, Haven Residences" },
-        ].map((t, i) => (
-          <article class="reveal glass rounded-3xl p-6" style={`transition-delay:${i*100}ms`}>
-            <div class="flex items-center gap-0.5 text-amber-400">
-              {[0,1,2,3,4].map(() => (<svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.6L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>))}
+          { name: 'Restaurants', desc: 'From tasting menus to pizzerias — course-pacing, allergen flows, and split bills that don\'t break friendships.', meta: '04 modules · 120+ POS devices' },
+          { name: 'Bars',        desc: 'Sub-second tabs, cocktail specs, pour costing, and staff tipping calibrated for volume nights.', meta: '03 modules · Live stock' },
+          { name: 'Hotels',      desc: 'Rooms, F&B, spa, events — a single folio and a single nightly audit that actually audits.', meta: '05 modules · PMS-ready' },
+        ].map((v, i) => (
+          <Reveal delay={i * 100}>
+            <div class="relative h-full bg-paper p-8 transition-colors hover:bg-paper-warm">
+              <div class="eyebrow text-ink-400">0{i + 1}</div>
+              <h3 class="mt-6 font-display text-3xl tracking-tight text-ink">{v.name}</h3>
+              <p class="mt-4 text-[0.95rem] leading-relaxed text-ink-500">{v.desc}</p>
+              <div class="mono mt-8 text-[0.7rem] tracking-wide text-ink-400">{v.meta}</div>
             </div>
-            <p class="mt-4 text-[15px] leading-relaxed">“{t.q}”</p>
-            <div class="mt-6 flex items-center gap-3">
-              <span class="h-10 w-10 rounded-full bg-gradient-to-br from-brand-400 to-accent-500"></span>
-              <div>
-                <p class="text-sm font-semibold">{t.a}</p>
-                <p class="text-xs text-[var(--text-muted)]">{t.r}</p>
-              </div>
-            </div>
-          </article>
+          </Reveal>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="relative px-5 py-24">
-    <div class="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] p-10 md:p-16 text-center">
-      <div class="absolute inset-0 -z-10 animate-gradient bg-gradient-to-br from-brand-600 via-accent-500 to-mint-500 opacity-90"></div>
-      <div class="absolute inset-0 -z-10 noise"></div>
-      <h2 class="text-4xl font-semibold text-white md:text-6xl">Ready to run a venue guests remember?</h2>
-      <p class="mx-auto mt-4 max-w-xl text-white/80">Start free. Launch your first floor in minutes. Scale to every property in one click.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href="/download" class="btn-primary !bg-white !text-brand-700 shadow-xl hover:shadow-2xl">
-          Start your free trial
-        </a>
-        <a href="/pricing" class="btn-ghost !border-white/50 !text-white !bg-white/10">See pricing</a>
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="relative overflow-hidden bg-ink py-24 text-paper sm:py-32">
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-paper to-transparent opacity-20"></div>
+
+    <ParallaxLayer speed={0.08} class="pointer-events-none absolute -right-40 top-10 h-[500px] w-[500px]">
+      <div class="h-full w-full rounded-full bg-brass-500/15 blur-3xl"></div>
+    </ParallaxLayer>
+
+    <div class="container-edge relative">
+      <div class="max-w-3xl">
+        <div data-reveal class="eyebrow mb-6 flex items-center gap-3 text-paper/60">
+          <span class="h-px w-8 bg-paper/40"></span>
+          Voices
+        </div>
+        <h2 data-reveal class="font-display text-4xl leading-[1.04] tracking-tightest sm:text-5xl lg:text-6xl">
+          What hoteliers, chefs and bar owners say when the review cameras are off.
+        </h2>
+      </div>
+
+      <div class="mt-16 grid gap-px overflow-hidden border border-paper/10 bg-paper/10 md:grid-cols-3">
+        {testimonials.map((t, i) => (
+          <Reveal delay={i * 120}>
+            <figure class="h-full bg-ink p-8">
+              <blockquote class="font-display text-[1.25rem] leading-[1.35] tracking-tight text-paper">
+                "{t.quote}"
+              </blockquote>
+              <figcaption class="mt-8 border-t border-paper/15 pt-4 text-[0.8rem] text-paper/70">
+                <div class="text-paper">{t.author}</div>
+                <div>{t.role}</div>
+                <div class="mono mt-1 text-[0.65rem] text-paper/50">{t.venue}</div>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
       </div>
     </div>
   </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="relative overflow-hidden py-28">
+    <div class="hero-aurora absolute inset-0 -z-10 opacity-70"></div>
+    <div class="grain absolute inset-0 -z-10"></div>
+
+    <div class="container-edge">
+      <Reveal mode="scale">
+        <div class="relative mx-auto max-w-4xl border border-ink/15 bg-paper p-12 text-center sm:p-20">
+          <div class="eyebrow mb-5 text-ink-500">Ready when you are</div>
+          <h2 class="font-display text-4xl leading-[1.04] tracking-tightest text-ink sm:text-6xl">
+            Move your house onto <em class="not-italic"><span class="underline-brass">Maison</span></em>.
+          </h2>
+          <p class="mx-auto mt-6 max-w-xl text-ink-500">
+            30-day trial. White-glove migration from Toast, Lightspeed, Mews, and the spreadsheet
+            you've been meaning to retire for years.
+          </p>
+          <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <a href="/download" class="btn-primary">Start free trial</a>
+            <a href="/contact" class="btn-ghost">Book a walkthrough</a>
+          </div>
+          <div class="mono mt-10 text-[0.65rem] tracking-[0.22em] text-ink-400">
+            · NO CARD · CANCEL ANYTIME · AVERAGE MIGRATION 6 DAYS ·
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
 </BaseLayout>

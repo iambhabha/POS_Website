@@ -1,97 +1,68 @@
 ---
-interface Props { embedded?: boolean }
-const { embedded = false } = Astro.props;
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const messages = [
+  { who: 'guest', name: 'Clara Abate', role: 'VIP · allergic to walnuts', time: '19:22', text: 'Running 10 min late — can we keep the back booth?' },
+  { who: 'staff', name: 'Léo · Maître d\'', time: '19:23', text: 'Of course, Clara. Booth 7 is held. Still pét-nat to start?' },
+  { who: 'guest', name: 'Clara Abate', time: '19:24', text: 'Please. And a vegetarian for the 4th guest.' },
+  { who: 'ai', name: 'Service AI', time: '19:24', text: 'Suggested: swap uni linguine → girolle risotto for guest 4. Allergy flag active (walnuts). Shall I notify the kitchen?' },
+  { who: 'staff', name: 'Léo · Maître d\'', time: '19:25', text: '✓ Sent.' },
+];
 ---
-<div class:list={["flex h-full min-h-[540px] flex-col overflow-hidden rounded-3xl", !embedded && "glass"]}>
-  <!-- header -->
-  <header class="flex items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
+<div class={`overflow-hidden border border-ink/10 bg-paper ${className}`}>
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-ink/10 bg-paper-warm/50 px-5 py-3">
     <div class="flex items-center gap-3">
-      <div class="relative">
-        <span class="block h-10 w-10 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500"></span>
-        <span class="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[var(--bg)] bg-emerald-400"></span>
-      </div>
-      <div>
-        <p class="text-sm font-semibold">Mireille L.</p>
-        <p class="text-[11px] text-[var(--text-muted)]">GM · Aurora Hotel · Online</p>
+      <div class="flex h-8 w-8 items-center justify-center bg-ink font-display text-sm text-paper">C</div>
+      <div class="leading-tight">
+        <div class="text-sm text-ink">Clara Abate</div>
+        <div class="mono text-[0.68rem] text-ink-500">Reservation · 19:30 · 4 pax</div>
       </div>
     </div>
-    <div class="flex items-center gap-1">
-      {["phone","video","dots"].map((k) => (
-        <button aria-label={k} class="grid h-9 w-9 place-items-center rounded-full glass transition-transform hover:-translate-y-0.5">
-          {k === "phone" && <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.9 9.6a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>}
-          {k === "video" && <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M21 8l-4 4 4 4z"/></svg>}
-          {k === "dots" && <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>}
-        </button>
-      ))}
-    </div>
-  </header>
-
-  <!-- messages -->
-  <div class="chat-scroll flex-1 space-y-4 overflow-y-auto px-5 py-5">
-    <div class="flex justify-center">
-      <span class="chip !text-[10px]">Today · 18:02</span>
-    </div>
-
-    <div class="flex items-end gap-2 msg msg-in">
-      <span class="h-7 w-7 flex-none rounded-lg bg-gradient-to-br from-brand-400 to-accent-500"></span>
-      <div class="max-w-[70%] space-y-1.5">
-        <div class="glass rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm">Hi team — we’re rolling out Barista at Aurora #3 next week. Any tips before go-live?</div>
-        <div class="glass rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm">Also the pour-control hardware for the rooftop bar?</div>
-      </div>
-    </div>
-
-    <div class="flex items-end justify-end gap-2 msg msg-out">
-      <div class="max-w-[70%] space-y-1.5 text-right">
-        <div class="inline-block rounded-2xl rounded-br-sm bg-gradient-to-r from-brand-500 to-accent-500 px-4 py-2.5 text-left text-sm text-white shadow-lg">
-          Amazing 🎉 I’ll send the pre-launch checklist and schedule a run-through for Tuesday.
-        </div>
-        <div class="inline-block rounded-2xl rounded-br-sm bg-gradient-to-r from-brand-500 to-accent-500 px-4 py-2.5 text-left text-sm text-white shadow-lg">
-          Your pour kit shipped this morning — tracking in your inbox.
-        </div>
-        <p class="text-[10px] text-[var(--text-muted)]">Seen · 18:04</p>
-      </div>
-    </div>
-
-    <div class="flex items-end gap-2 msg msg-in">
-      <span class="h-7 w-7 flex-none rounded-lg bg-gradient-to-br from-brand-400 to-accent-500"></span>
-      <div class="max-w-[70%]">
-        <div class="glass rounded-2xl rounded-bl-sm px-4 py-2.5 text-sm">Perfect. Does Tuesday 15:00 work? We’ll loop in the bar lead.</div>
-      </div>
-    </div>
-
-    <div class="flex items-end gap-2 msg msg-in typing-wrap">
-      <span class="h-7 w-7 flex-none rounded-lg bg-gradient-to-br from-brand-400 to-accent-500"></span>
-      <div class="glass flex items-center gap-1 rounded-2xl rounded-bl-sm px-4 py-3">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      </div>
+    <div class="flex items-center gap-2 text-[0.68rem] text-ink-500">
+      <span class="chip bg-paper">Guest memory · 14 visits</span>
     </div>
   </div>
 
-  <!-- composer -->
-  <footer class="border-t border-white/10 px-4 py-3">
-    <div class="flex items-center gap-2 rounded-full glass px-3 py-2">
-      <button aria-label="Attach" class="grid h-8 w-8 place-items-center rounded-full hover:bg-white/10">
-        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.4 11.1-9.3 9.3a6 6 0 0 1-8.5-8.5l9.3-9.3a4 4 0 0 1 5.7 5.7l-9.3 9.3a2 2 0 0 1-2.9-2.8l8.5-8.5"/></svg>
-      </button>
-      <input type="text" placeholder="Write a message…" class="flex-1 bg-transparent px-2 text-sm placeholder:text-[var(--text-muted)] focus:outline-none" />
-      <button class="btn-primary !py-1.5 !px-3 text-xs">
-        Send
-        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-      </button>
-    </div>
-  </footer>
-</div>
+  <!-- Thread -->
+  <div class="space-y-5 p-5">
+    {messages.map((m) => {
+      const isStaff = m.who === 'staff';
+      const isAI = m.who === 'ai';
+      return (
+        <div class={`flex gap-3 ${isStaff ? 'flex-row-reverse text-right' : ''}`}>
+          <div class={`flex h-7 w-7 shrink-0 items-center justify-center text-[0.65rem] ${
+            isStaff ? 'bg-ink text-paper' :
+            isAI ? 'border border-brass-500 text-brass-700' :
+            'border border-ink/20 text-ink'
+          }`}>
+            {isAI ? '✦' : m.name.charAt(0)}
+          </div>
+          <div class={`max-w-[78%] ${isStaff ? 'items-end' : ''}`}>
+            <div class="flex items-center gap-2 text-[0.66rem] text-ink-500">
+              <span>{m.name}</span>
+              <span class="mono">{m.time}</span>
+            </div>
+            <div class={`mt-1 inline-block px-3.5 py-2.5 text-[0.82rem] leading-relaxed ${
+              isStaff ? 'bg-ink text-paper' :
+              isAI ? 'border border-brass-400 bg-brass-50 text-ink' :
+              'border border-ink/10 bg-paper-warm text-ink'
+            }`}>
+              {m.text}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
 
-<style is:global>
-  .msg { opacity: 0; transform: translateY(10px); animation: rise .6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-  .msg-in { animation-delay: .1s; }
-  .msg-out { animation-delay: .3s; }
-  .typing-wrap { animation-delay: .6s; }
-  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
-  .dot { width: 6px; height: 6px; border-radius: 9999px; background: currentColor; opacity: .6; animation: bounce 1.2s infinite ease-in-out; }
-  .dot:nth-child(2) { animation-delay: .15s; }
-  .dot:nth-child(3) { animation-delay: .3s; }
-  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); opacity: .4; } 40% { transform: translateY(-4px); opacity: 1; } }
-  .chat-scroll::-webkit-scrollbar { width: 6px; }
-  .chat-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.25); border-radius: 10px; }
-</style>
+  <!-- Composer -->
+  <div class="flex items-center gap-3 border-t border-ink/10 bg-paper-warm/40 px-5 py-3">
+    <input type="text" placeholder="Reply to Clara…" class="flex-1 bg-transparent text-sm text-ink placeholder:text-ink-400 focus:outline-none" />
+    <span class="mono text-[0.62rem] text-ink-400">⌘↵</span>
+    <button class="btn-primary px-3 py-1.5 text-xs">Send</button>
+  </div>
+</div>

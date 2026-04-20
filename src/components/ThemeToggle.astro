@@ -1,15 +1,39 @@
 ---
 ---
 <button
-  data-theme-toggle
+  id="theme-toggle"
+  class="inline-flex h-9 items-center gap-2 border border-ink/15 px-3 text-xs text-ink-600 transition-colors hover:border-ink hover:text-ink"
   aria-label="Toggle theme"
-  class="relative inline-flex h-10 w-10 items-center justify-center rounded-full glass transition-transform duration-300 hover:scale-105 hover:rotate-12"
 >
-  <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  <svg id="theme-icon-sun" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+    <circle cx="8" cy="8" r="3"/>
+    <path d="M8 1v2M8 13v2M15 8h-2M3 8H1M13 3l-1.4 1.4M4.4 11.6 3 13M13 13l-1.4-1.4M4.4 4.4 3 3" stroke-linecap="square"/>
   </svg>
-  <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+  <svg id="theme-icon-moon" class="hidden h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+    <path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/>
   </svg>
+  <span class="mono tracking-[0.12em]">THEME</span>
 </button>
+
+<script is:inline>
+  (() => {
+    const apply = (t) => {
+      document.documentElement.classList.toggle('dark', t === 'dark');
+      const sun = document.getElementById('theme-icon-sun');
+      const moon = document.getElementById('theme-icon-moon');
+      if (sun && moon) {
+        sun.classList.toggle('hidden', t === 'dark');
+        moon.classList.toggle('hidden', t !== 'dark');
+      }
+    };
+    const stored = localStorage.getItem('theme');
+    const init = stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    apply(init);
+
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      apply(next);
+    });
+  })();
+</script>

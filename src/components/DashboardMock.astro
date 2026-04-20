@@ -1,74 +1,45 @@
 ---
-interface Props { compact?: boolean; }
-const { compact = false } = Astro.props;
+import StatCard from './StatCard.astro';
+import LineChart from './LineChart.astro';
+import DonutChart from './DonutChart.astro';
 ---
-<div class={`relative w-full ${compact ? "max-w-md" : "max-w-2xl"} aspect-[16/10]`}>
-  <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-500/40 via-accent-500/30 to-mint-500/40 blur-2xl opacity-70"></div>
-  <div class="relative h-full w-full overflow-hidden rounded-3xl glass-strong shadow-2xl">
-    <div class="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5">
-      <span class="h-2.5 w-2.5 rounded-full bg-red-400/80"></span>
-      <span class="h-2.5 w-2.5 rounded-full bg-yellow-400/80"></span>
-      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80"></span>
-      <span class="ml-3 text-[11px] text-[var(--text-muted)]">barista.app / dashboard</span>
+<div class="relative overflow-hidden border border-ink/10 bg-paper">
+  <!-- Chrome -->
+  <div class="flex items-center justify-between border-b border-ink/10 bg-paper-warm/50 px-5 py-3">
+    <div class="flex items-center gap-2">
+      <span class="inline-block h-2 w-2 rounded-full bg-ink/15"></span>
+      <span class="inline-block h-2 w-2 rounded-full bg-ink/15"></span>
+      <span class="inline-block h-2 w-2 rounded-full bg-ink/15"></span>
     </div>
+    <div class="mono text-[0.68rem] tracking-wide text-ink-500">maison.app / service</div>
+    <div class="flex items-center gap-1.5 mono text-[0.6rem] text-ink-400">
+      <span class="inline-flex h-1.5 w-1.5 rounded-full bg-green-500"></span>
+      LIVE · 12:42
+    </div>
+  </div>
 
-    <div class="grid h-[calc(100%-38px)] grid-cols-[70px_1fr]">
-      <!-- Sidebar -->
-      <aside class="flex flex-col items-center gap-3 border-r border-white/10 py-3">
-        {["grid","cart","menu","users","chart","gear"].map((_, i) => (
-          <span class:list={[
-            "grid h-9 w-9 place-items-center rounded-xl text-xs",
-            i === 0 ? "bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-lg" : "text-[var(--text-muted)]"
-          ]}>
-            <span class="h-3.5 w-3.5 rounded-sm bg-current opacity-80"></span>
-          </span>
-        ))}
-      </aside>
+  <div class="grid gap-4 p-5 md:grid-cols-3">
+    <StatCard label="Revenue today" value="€14,682" delta="+8.4%" trend="up" hint="vs. last Friday" sparkline={[8,9,12,11,14,16,18,21,19,24,22,26,28,32]} />
+    <StatCard label="Covers" value="142" delta="+12" trend="up" hint="18:00 seating active" />
+    <StatCard label="Avg check" value="€103" delta="−2%" trend="down" hint="Pairing down-trade" />
+  </div>
 
-      <!-- Content -->
-      <div class="flex flex-col gap-3 p-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Today</p>
-            <p class="text-base font-semibold">Good evening, Alex</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="chip !py-1 !px-2 text-[10px]">Live</span>
-            <span class="h-7 w-7 rounded-full bg-gradient-to-br from-brand-400 to-accent-500"></span>
-          </div>
-        </div>
+  <div class="grid gap-4 px-5 pb-5 lg:grid-cols-[1.6fr_1fr]">
+    <LineChart />
+    <DonutChart />
+  </div>
 
-        <div class="grid grid-cols-3 gap-2">
-          {[
-            { label: "Revenue", value: "$8,214", trend: "+12.4%" },
-            { label: "Orders", value: "312", trend: "+5.1%" },
-            { label: "Occupancy", value: "86%", trend: "+2.3%" },
-          ].map((s) => (
-            <div class="rounded-2xl glass p-2.5">
-              <p class="text-[9px] uppercase tracking-wider text-[var(--text-muted)]">{s.label}</p>
-              <p class="mt-0.5 text-sm font-semibold">{s.value}</p>
-              <p class="text-[10px] text-emerald-400">{s.trend}</p>
-            </div>
-          ))}
-        </div>
-
-        <div class="flex-1 rounded-2xl glass p-3">
-          <div class="flex items-center justify-between">
-            <p class="text-xs font-medium">Sales flow</p>
-            <span class="text-[10px] text-[var(--text-muted)]">Last 7 days</span>
-          </div>
-          <svg viewBox="0 0 300 90" class="mt-2 h-[calc(100%-18px)] w-full">
-            <defs>
-              <linearGradient id="mockGrad" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stop-color="#3b5bff" stop-opacity="0.6"/>
-                <stop offset="1" stop-color="#3b5bff" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <path d="M0 70 C 30 60, 50 30, 80 35 S 130 70, 160 45 S 220 15, 250 30 S 290 55, 300 40 L 300 90 L 0 90 Z" fill="url(#mockGrad)"/>
-            <path d="M0 70 C 30 60, 50 30, 80 35 S 130 70, 160 45 S 220 15, 250 30 S 290 55, 300 40" fill="none" stroke="#ff3d8a" stroke-width="1.8"/>
-          </svg>
-        </div>
-      </div>
+  <div class="border-t border-ink/10 px-5 py-4">
+    <div class="flex items-center justify-between">
+      <div class="eyebrow text-ink-500">Tonight's service</div>
+      <div class="mono text-[0.62rem] text-ink-400">28 of 32 tables · 12 walks-in expected</div>
+    </div>
+    <div class="mt-3 grid grid-cols-4 gap-1 sm:grid-cols-8 md:grid-cols-12">
+      {Array.from({ length: 24 }).map((_, i) => {
+        const s = [0.9, 0.6, 0.3, 0.05][i % 4];
+        const state = s > 0.7 ? 'bg-ink' : s > 0.4 ? 'bg-brass-500' : s > 0.2 ? 'bg-brass-200' : 'border border-ink/10';
+        return <div class={`aspect-square ${state}`}></div>;
+      })}
     </div>
   </div>
 </div>
